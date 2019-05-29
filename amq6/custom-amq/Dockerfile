@@ -1,4 +1,4 @@
-FROM openshift/jboss-amq-63:1.4
+FROM openshift/jboss-amq-63:1.3
 
 # Temporary switch to root
 USER root
