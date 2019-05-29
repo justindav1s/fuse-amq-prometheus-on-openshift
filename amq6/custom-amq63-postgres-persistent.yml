@@ -133,8 +133,6 @@ objects:
             value: ${MQ_TOPICS}
           - name: MQ_SERIALIZABLE_PACKAGES
             value: ${MQ_SERIALIZABLE_PACKAGES}
-          - name: AMQ_SPLIT
-            value: ${AMQ_SPLIT}
           - name: AMQ_MESH_DISCOVERY_TYPE
             value: ${AMQ_MESH_DISCOVERY_TYPE}
           - name: AMQ_MESH_SERVICE_NAME
@@ -151,14 +149,12 @@ objects:
             value: -javaagent:/opt/prometheus/jmx_prometheus_javaagent.jar=9779:/opt/prometheus/prometheus-config.yml
           - name: AMQ_SECRET_CONFIG_DIR
             value: /etc/amq-secret-config-volume
-
           - name: DB_URL
-            value:
+            value: ${DB_URL}
           - name: DB_USERNAME
-            value:
+            value: ${DB_USERNAME}
           - name: DB_PASSWORD
-            value:
-
+            value: ${DB_PASSWORD}
           image: ${IMAGE_STREAM}
           imagePullPolicy: Always
           name: ${APPLICATION_NAME}-amq
@@ -187,15 +183,7 @@ objects:
               - /bin/bash
               - -c
               - /opt/amq/bin/readinessProbe.sh
-          volumeMounts:
-          - mountPath: /etc/amq-secret-config-volume
-            name: broker-secret-config-volume
-            readOnly: true
         terminationGracePeriodSeconds: 60
-        volumes:
-        - name: broker-secret-config-volume
-          secret:
-            secretName: ${APPLICATION_NAME}-secret-config
     triggers:
     - imageChangeParams:
         automatic: true
@@ -312,7 +300,7 @@ parameters:
   displayName: Queue Memory Limit
   name: AMQ_QUEUE_MEMORY_LIMIT
 - name: DB_URL
-  value: "postgresql://postgresql:5432/postgres"
+  value: "jdbc:postgresql://postgresql:5432/postgres"
   required: true
 - name: DB_USERNAME
   value: "amq"

@@ -18,7 +18,7 @@ EXPOSE 9779
 RUN curl https://jdbc.postgresql.org/download/postgresql-42.2.5.jar -o /opt/amq/lib/extra/postgresql-42.2.5.jar
 
 COPY ./configuration/openshift-activemq.xml /opt/amq/conf/activemq.xml
-
+COPY ./configuration/logging.properties /opt/amq/conf/logging.properties
 ## S2I customization and annotation
 #COPY ./s2i/ /opt/amq-custom/s2i
 #COPY launch.sh /opt/amq-custom
