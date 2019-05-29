@@ -25,7 +25,6 @@ objects:
           uri: ${GIT_REPO}
           ref: ${GIT_BRANCH}
         contextDir: ${GIT_REPO_CONTEXT}
-        dockerfile: .
       strategy:
         type: Docker
       output:
