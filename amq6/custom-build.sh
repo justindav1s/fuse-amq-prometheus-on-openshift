@@ -4,7 +4,8 @@ PROJECT=amq
 APP_NAME=custom-amq6
 BUILD_NAME=${APP_NAME}-build
 
-oc delete bc,is ${BUILD_NAME}
+oc delete is ${APP_NAME}
+oc delete bc ${BUILD_NAME}
 
 oc process -f build-config.yaml \
   -p BUILD_NAME=${BUILD_NAME}  \
