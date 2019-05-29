@@ -8,6 +8,8 @@ BUILD_NAME=${APP_NAME}-build
 
 oc delete dc,svc -l application=${APP_NAME}
 
+oc policy add-role-to-user view -z default
+
 oc new-app -f custom-amq63-postgres-persistent.yml \
   -p APPLICATION_NAME=${APP_NAME}  \
   -p MQ_PROTOCOL="openwire"  \

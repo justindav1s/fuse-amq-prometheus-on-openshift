@@ -7,6 +7,7 @@ https://access.redhat.com/articles/310613
 https://access.redhat.com/documentation/en-us/red_hat_jboss_a-mq/6.3/html/fault_tolerant_messaging/fmqfaulttolnetwork
 
 https://access.redhat.com/documentation/en-us/red_hat_jboss_a-mq/6.3/html/using_networks_of_brokers/index
+https://access.redhat.com/documentation/en-us/red_hat_jboss_a-mq/6.3/html/managing_and_monitoring_a_broker/mq-topol#MQ-Topol-BrokerNetworks
 
 # Openshift
 
