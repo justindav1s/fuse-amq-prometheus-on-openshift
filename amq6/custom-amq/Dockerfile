@@ -19,15 +19,15 @@ RUN curl https://jdbc.postgresql.org/download/postgresql-42.2.5.jar -o /opt/amq/
 
 COPY ./configuration/openshift-activemq.xml /opt/amq/conf/activemq.xml
 
-# S2I customization and annotation
-COPY ./s2i/ /opt/amq-custom/s2i
-COPY launch.sh /opt/amq-custom
-RUN chmod -R 777 /opt/amq-custom
+## S2I customization and annotation
+#COPY ./s2i/ /opt/amq-custom/s2i
+#COPY launch.sh /opt/amq-custom
+#RUN chmod -R 777 /opt/amq-custom
+#
+#LABEL io.openshift.s2i.scripts-url="image:///opt/amq-custom/s2i"
 
-LABEL io.openshift.s2i.scripts-url="image:///opt/amq-custom/s2i"
-
-# Override default launch.
-CMD [ "/opt/amq-custom/launch.sh" ]
+## Override default launch.
+#CMD [ "/opt/amq-custom/launch.sh" ]
 
 # S2I requires a numeric, non-0 UID. This is the UID for the jboss user in the base image
 USER 185
