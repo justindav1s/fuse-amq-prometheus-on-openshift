@@ -1,0 +1,32 @@
+Vanilla OCP AMQ6 startup (with KahaDB)
+
+-XX:+UseParallelGC -XX:MinHeapFreeRatio=20 -XX:MaxHeapFreeRatio=40 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -XX:MaxMetaspaceSize=100m -XX:+ExitOnOutOfMemoryError
+Running jboss-amq-6/amq63-openshift image, version 1.3
+Attempting to obtain lock for directory: (/opt/amq/data/split-1)
+Successfully locked directory: (/opt/amq/data/split-1)
+INFO: Loading '/opt/amq/bin/env'
+INFO: Using java '/usr/lib/jvm/java-1.8.0/bin/java'
+INFO: Starting in foreground, this is just for debugging purposes (stop process by pressing CTRL+C)
+Java Runtime: Oracle Corporation 1.8.0_171 /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.171-8.b10.el7_5.x86_64/jre
+  Heap sizes: current=981504k  free=966143k  max=14556672k
+    JVM args: -XX:+UseParallelGC -XX:MinHeapFreeRatio=20 -XX:MaxHeapFreeRatio=40 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -XX:MaxMetaspaceSize=100m -XX:+ExitOnOutOfMemoryError -javaagent:/opt/jolokia/jolokia.jar=config=/opt/jolokia/etc/jolokia.properties -Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Djava.io.tmpdir=/opt/amq/tmp -Dactivemq.classpath=/opt/amq/conf: -Dactivemq.home=/opt/amq -Dactivemq.base=/opt/amq -Dactivemq.conf=/opt/amq/conf -Dactivemq.data=/opt/amq/data/split-1/serverData
+Extensions classpath:
+  [/opt/amq/lib,/opt/amq/lib/camel,/opt/amq/lib/optional,/opt/amq/lib/web,/opt/amq/lib/extra]
+ACTIVEMQ_HOME: /opt/amq
+ACTIVEMQ_BASE: /opt/amq
+ACTIVEMQ_CONF: /opt/amq/conf
+ACTIVEMQ_DATA: /opt/amq/data/split-1/serverData
+Loading message broker from: xbean:activemq.xml
+ INFO | Refreshing org.apache.activemq.xbean.XBeanBrokerFactory$1@68837a77: startup date [Tue May 28 15:33:47 UTC 2019]; root of context hierarchy
+I> No access restrictor found, access to any MBean is allowed
+Jolokia: Agent started with URL https://10.128.0.84:8778/jolokia/
+ INFO | Creating DNS discovery agent for dns://broker-amq-mesh:61616/?transportType=tcp&queryInterval=30.
+ INFO | Using Persistence Adapter: KahaDBPersistenceAdapter[/opt/amq/data/split-1/serverData/kahadb]
+ INFO | PListStore:[/opt/amq/data/split-1/serverData/broker-amq-1-j75fd/tmp_storage] started
+ INFO | Apache ActiveMQ 5.11.0.redhat-630343 (broker-amq-1-j75fd, ID:broker-amq-1-j75fd-39803-1559057627926-0:1) is starting
+ INFO | Listening for connections at: tcp://broker-amq-1-j75fd:61616?maximumConnections=1000&wireFormat.maxFrameSize=104857600
+ INFO | Connector openwire started
+ INFO | Starting OpenShift discovery agent for service broker-amq-mesh transport type tcp
+ INFO | Network Connector DiscoveryNetworkConnector:NC:BrokerService[broker-amq-1-j75fd] started
+ INFO | Apache ActiveMQ 5.11.0.redhat-630343 (broker-amq-1-j75fd, ID:broker-amq-1-j75fd-39803-1559057627926-0:1) started
+ INFO | For help or more information please see: http://activemq.apache.org

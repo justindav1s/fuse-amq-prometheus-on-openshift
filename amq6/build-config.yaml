@@ -1,0 +1,45 @@
+kind: Template
+apiVersion: v1
+objects:
+  - kind: BuildConfig
+    apiVersion: v1
+    metadata:
+      labels:
+        app: ${APPLICATION_NAME}
+        build: ${BUILD_NAME}
+      name: ${BUILD_NAME}
+    spec:
+      source:
+      git:
+        uri: ${GIT_REPO}
+        ref: ${GIT_BRANCH}
+      contextDir: ${GIT_REPO_CONTEXT}
+      dockerfile: "Dockerfile"
+      strategy:
+        type: Docker
+      output:
+        to:
+          kind: ImageStreamTag
+          name: ${APPLICATION_NAME}:latest
+      runPolicy: Serial
+      resources: {}
+      postCommit: {}
+
+parameters:
+  - name: BUILD_NAME
+    displayName: Build Name
+    description: The name of the build configuration resource that also matches image stream resource.
+    required: true
+  - name: APPLICATION_NAME
+    displayName: Application Name
+    description: Name of the application label that should be used in all resources.
+    required: true
+  - name: GIT_REPO
+    displayName: Git Repository
+    required: true
+  - name: GIT_BRANCH
+    displayName: Git Branch or Tag
+    required: true
+  - name: GIT_REPO_CONTEXT
+    displayName: Sub directory of Git Branch or Tag
+    required: true
