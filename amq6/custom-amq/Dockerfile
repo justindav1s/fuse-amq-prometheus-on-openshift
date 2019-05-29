@@ -19,7 +19,7 @@ RUN curl https://jdbc.postgresql.org/download/postgresql-42.2.5.jar -o /opt/amq/
 
 COPY ./configuration/openshift-activemq.xml /opt/amq/conf/activemq.xml
 COPY ./configuration/logging.properties /opt/amq/conf/logging.properties
-COPY ./configuration/log4j.properties /opt/amq/conf/log4j.properties
+#COPY ./configuration/log4j.properties /opt/amq/conf/log4j.properties
 
 ## S2I customization and annotation
 #COPY ./s2i/ /opt/amq-custom/s2i
