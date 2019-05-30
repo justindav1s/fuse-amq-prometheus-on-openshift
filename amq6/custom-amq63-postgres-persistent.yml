@@ -62,7 +62,7 @@ objects:
       service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
     labels:
       application: ${APPLICATION_NAME}
-    name: ${APPLICATION_NAME}-amq-mesh
+    name: ${AMQ_MESH_SERVICE_NAME}
   spec:
     clusterIP: None
     ports:
@@ -108,7 +108,7 @@ objects:
           - name: AMQ_MESH_DISCOVERY_TYPE
             value: ${AMQ_MESH_DISCOVERY_TYPE}
           - name: AMQ_MESH_SERVICE_NAME
-            value: ${APPLICATION_NAME}-amq-mesh
+            value: ${AMQ_MESH_SERVICE_NAME}
           - name: AMQ_MESH_SERVICE_NAMESPACE
             valueFrom:
               fieldRef:
@@ -233,4 +233,7 @@ parameters:
   required: true
 - name: IMAGE_STREAM_NAMESPACE
   value: "amq"
+  required: true
+- name: AMQ_MESH_SERVICE_NAME
+  value: "amq-mesh"
   required: true

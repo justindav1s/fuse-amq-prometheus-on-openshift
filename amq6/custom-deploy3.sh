@@ -18,7 +18,7 @@ oc new-app -f custom-amq63-postgres-persistent.yml \
   -p MQ_SERIALIZABLE_PACKAGES="" \
   -p MQ_USERNAME="justindav1s" \
   -p MQ_PASSWORD="password" \
-  -p AMQ_MESH_DISCOVERY_TYPE="dns" \
+  -p AMQ_MESH_DISCOVERY_TYPE="kube" \
   -p AMQ_QUEUE_MEMORY_LIMIT="100mb" \
   -p DB_URL="jdbc:postgresql://amq1-postgresql:5432/amq_${BROKER_NUM}" \
   -p DB_USERNAME="amq" \
