@@ -12,7 +12,7 @@ oc policy add-role-to-user view -z default
 
 oc new-app -f custom-amq63-postgres-persistent.yml \
   -p APPLICATION_NAME=${APP_NAME}  \
-  -p MQ_PROTOCOL="openwire"  \
+  -p MQ_PROTOCOL="openwire, amqp"  \
   -p MQ_QUEUES=""  \
   -p MQ_TOPICS=""  \
   -p MQ_SERIALIZABLE_PACKAGES="" \
