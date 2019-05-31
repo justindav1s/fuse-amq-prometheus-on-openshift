@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
-PROJECT=amq
-APP_NAME=fuse-consumer
+. ./env.sh
+
+oc project ${PROJECT}
+
+APP_NAME=consumer-app
 BUILD_NAME=${APP_NAME}-build
 
 oc delete is ${APP_NAME}
@@ -12,7 +15,7 @@ oc process -f ../../templates/fuse-app-bc-template.yaml \
   -p APPLICATION_NAME=${APP_NAME}  \
   -p GIT_REPO="https://github.com/justindav1s/amq.git"  \
   -p GIT_BRANCH=master  \
-  -p GIT_REPO_CONTEXT="fuse/consumer-app"  \
+  -p GIT_REPO_CONTEXT="fuse/${APP_NAME}"  \
   -p FUSE_IMAGE="fuse7-java-openshift" \
   -p FUSE_IMAGE_TAG="1.2" \
   -p FUSE_IMAGE_NS="openshift" \
