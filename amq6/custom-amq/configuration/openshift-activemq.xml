@@ -110,7 +110,7 @@
                 (i.e. messageTTL="-1") but create demand subscription only to the next connected
                 broker (i.e. consumerTTL="1"). See AMQ-4607.
             -->
-            <networkConnector userName="${AMQ_USER}" password="${AMQ_PASSWORD}" uri="kube://${AMQ_MESH_SERVICE_NAME}:61616/?transportType=tcp&amp;queryInterval=30" messageTTL="-1" consumerTTL="1" />
+            <networkConnector userName="${AMQ_USER}" password="${AMQ_PASSWORD}" uri="${AMQ_MESH_DISCOVERY_TYPE}://${AMQ_MESH_SERVICE_NAME}:61616/?transportType=tcp&amp;queryInterval=30" messageTTL="-1" consumerTTL="1" />
         </networkConnectors>
 
         <!--
