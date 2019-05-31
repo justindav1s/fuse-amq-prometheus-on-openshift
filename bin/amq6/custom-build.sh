@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-PROJECT=tmp
+PROJECT=amq
 APP_NAME=custom-amq6
 BUILD_NAME=${APP_NAME}-docker-build
 
-oc project tmp
+oc project ${PROJECT}
 
 oc delete is ${APP_NAME}
 oc delete bc ${BUILD_NAME}
