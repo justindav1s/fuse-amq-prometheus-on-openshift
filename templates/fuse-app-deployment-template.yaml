@@ -38,6 +38,8 @@ objects:
                 fieldPath: metadata.namespace
           - name: AMQP_HOST
             value: ${AMQP_HOST}
+          - name: AMQP_CONNECTION_STRING
+            value: ${AMQP_CONNECTION_STRING}
           - name: AMQP_USERNAME
             value: ${AMQP_USERNAME}
           - name: AMQP_PASSWORD
@@ -103,7 +105,10 @@ parameters:
   required: true
 - name: AMQP_HOST
   displayName: Address where amq6 amqp endpoint is listening
-  required: true
+  required: false
+- name: AMQP_CONNECTION_STRING
+  displayName: Use this as the broker address if something more complicated is required
+  required: false
 - name: AMQP_USERNAME
   displayName: amq6 username
   required: true

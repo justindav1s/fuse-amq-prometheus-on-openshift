@@ -80,7 +80,7 @@ public class AMQPConfiguration {
     }
 
     public void setPassword(String password) {
-        log.info("password : "+port);
+        log.info("password : "+password);
         this.password = password;
     }
 
