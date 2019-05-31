@@ -7,7 +7,7 @@ USER root
 RUN mkdir -p /opt/prometheus/etc \
     && curl http://central.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.11.0/jmx_prometheus_javaagent-0.11.0.jar \
         -o /opt/prometheus/jmx_prometheus_javaagent.jar
-ADD ./configuration/prometheus-config.yml /opt/prometheus/prometheus-config.yml
+ADD ./prometheus/prometheus-config.yml /opt/prometheus/prometheus-config.yml
 RUN chmod 444 /opt/prometheus/jmx_prometheus_javaagent.jar \
     && chmod 444 /opt/prometheus/prometheus-config.yml \
     && chmod 775 /opt/prometheus/etc \
@@ -17,9 +17,5 @@ EXPOSE 9779
 
 RUN curl https://jdbc.postgresql.org/download/postgresql-42.2.5.jar -o /opt/amq/lib/extra/postgresql-42.2.5.jar
 
-#COPY ./configuration/openshift-activemq.xml /opt/amq/conf/activemq.xml
-#COPY ./configuration/logging.properties /opt/amq/conf/logging.properties
-#COPY ./configuration/log4j.properties /opt/amq/conf/log4j.properties
-#
 ## S2I requires a numeric, non-0 UID. This is the UID for the jboss user in the base image
 USER 185
