@@ -37,7 +37,7 @@ objects:
       output:
         to:
           kind: ImageStreamTag
-          name: ${APPLICATION_NAME}:latest
+          name: ${APPLICATION_NAME}:${OUTPUT_IMAGE_TAG}
       runPolicy: Serial
       resources: {}
       postCommit: {}
@@ -72,3 +72,6 @@ parameters:
     displayName: Base amq image namespace
     required: true
     value: "openshift"
+  - name: OUTPUT_IMAGE_TAG
+    displayName: Output image tag
+    required: true
