@@ -17,6 +17,8 @@ package io.fabric8.quickstarts.camel.amq;
 
 import org.apache.activemq.jms.pool.PooledConnectionFactory;
 import org.apache.camel.component.amqp.AMQPComponent;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.qpid.jms.JmsConnectionFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -30,13 +32,26 @@ import org.springframework.context.annotation.ImportResource;
 @ImportResource({"classpath:spring/camel-context.xml"})
 public class Application {
 
+    private Log log = LogFactory.getLog(Application.class);
+
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
 
     @Bean(name = "amqp-component")
     AMQPComponent amqpComponent(AMQPConfiguration config) {
-        JmsConnectionFactory qpid = new JmsConnectionFactory(config.getUsername(), config.getPassword(), "amqp://"+ config.getHost() + ":" + config.getPort());
+
+        JmsConnectionFactory qpid = null;
+
+        if (config.getConnection_string() != null) {
+            log.info("Connection string : " + config.getConnection_string());
+            qpid = new JmsConnectionFactory(config.getUsername(), config.getPassword(), config.getConnection_string());
+        }
+        else {
+            log.info("Connection host : " + config.getHost());
+            qpid = new JmsConnectionFactory(config.getUsername(), config.getPassword(), "amqp://" + config.getHost() + ":" + config.getPort());
+        }
+
         qpid.setTopicPrefix("topic://");
 
         PooledConnectionFactory factory = new PooledConnectionFactory();
