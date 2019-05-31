@@ -1,5 +1,7 @@
 package io.fabric8.quickstarts.camel.amq;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,6 +11,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "amqp")
 public class AMQPConfiguration {
+
+    private Log log = LogFactory.getLog(AMQPConfiguration.class);
 
     /**
      * AMQ service host
@@ -30,6 +34,17 @@ public class AMQPConfiguration {
      */
     private String password;
 
+    public String getConnection_string() {
+        return connection_string;
+    }
+
+    public void setConnection_string(String connection_string) {
+        log.info("connection_string : "+connection_string);
+        this.connection_string = connection_string;
+    }
+
+    private String connection_string;
+
     public AMQPConfiguration() {
     }
 
@@ -38,6 +53,7 @@ public class AMQPConfiguration {
     }
 
     public void setHost(String host) {
+        log.info("host : "+host);
         this.host = host;
     }
 
@@ -46,6 +62,7 @@ public class AMQPConfiguration {
     }
 
     public void setPort(Integer port) {
+        log.info("port : "+port);
         this.port = port;
     }
 
@@ -54,6 +71,7 @@ public class AMQPConfiguration {
     }
 
     public void setUsername(String username) {
+        log.info("username : "+username);
         this.username = username;
     }
 
@@ -62,6 +80,7 @@ public class AMQPConfiguration {
     }
 
     public void setPassword(String password) {
+        log.info("password : "+port);
         this.password = password;
     }
 

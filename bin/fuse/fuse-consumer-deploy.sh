@@ -13,11 +13,12 @@ oc process -f ../../templates/fuse-app-deployment-template.yaml \
   -p AMQP_HOST="custom-amq6-broker-3-amq-amqp.amq.svc" \
   -p AMQP_USERNAME="justindav1s" \
   -p AMQP_PASSWORD="password" \
-  -p APP_IMAGE="fuse-consumer" \
+  -p APP_IMAGE=${APP_NAME} \
   -p APP_IMAGE_TAG="latest" \
-  -p APP_IMAGE_NS="tmp" | oc create -f -
+  -p APP_IMAGE_NS=${PROJECT} | oc create -f -
 
 sleep 2
+
 oc logs dc/${APP_NAME} -f
 
 

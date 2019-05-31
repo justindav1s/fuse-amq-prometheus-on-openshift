@@ -46,7 +46,7 @@ objects:
       resources: {}
       postCommit: {}
 
-
+parameters:
   - name: BUILD_NAME
     displayName: Build Name
     description: The name of the build configuration resource that also matches image stream resource.
