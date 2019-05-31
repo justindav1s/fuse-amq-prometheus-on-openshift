@@ -17,9 +17,9 @@ EXPOSE 9779
 
 RUN curl https://jdbc.postgresql.org/download/postgresql-42.2.5.jar -o /opt/amq/lib/extra/postgresql-42.2.5.jar
 
-COPY ./configuration/openshift-activemq.xml /opt/amq/conf/activemq.xml
-COPY ./configuration/logging.properties /opt/amq/conf/logging.properties
-COPY ./configuration/log4j.properties /opt/amq/conf/log4j.properties
-
-# S2I requires a numeric, non-0 UID. This is the UID for the jboss user in the base image
+#COPY ./configuration/openshift-activemq.xml /opt/amq/conf/activemq.xml
+#COPY ./configuration/logging.properties /opt/amq/conf/logging.properties
+#COPY ./configuration/log4j.properties /opt/amq/conf/log4j.properties
+#
+## S2I requires a numeric, non-0 UID. This is the UID for the jboss user in the base image
 USER 185

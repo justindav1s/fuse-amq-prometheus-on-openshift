@@ -1,0 +1,74 @@
+kind: Template
+apiVersion: v1
+objects:
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      annotations:
+      labels:
+        app: ${APPLICATION_NAME}
+      name: ${APPLICATION_NAME}
+    spec:
+      lookupPolicy:
+        local: false
+
+  - kind: BuildConfig
+    apiVersion: v1
+    metadata:
+      labels:
+        app: ${APPLICATION_NAME}
+        build: ${BUILD_NAME}
+      name: ${BUILD_NAME}
+    spec:
+      source:
+        git:
+          uri: ${GIT_REPO}
+          ref: ${GIT_BRANCH}
+        contextDir: ${GIT_REPO_CONTEXT}
+      strategy:
+        type: Source
+        sourceStrategy:
+          forcePull: true
+          from:
+            kind: ImageStreamTag
+            name: "${BASE_AMQ_IMAGE}:${BASE_AMQ_IMAGE_TAG}"
+            namespace: ${BASE_AMQ_IMAGE_NS}
+          incremental: true
+      output:
+        to:
+          kind: ImageStreamTag
+          name: ${APPLICATION_NAME}:latest
+      runPolicy: Serial
+      resources: {}
+      postCommit: {}
+
+parameters:
+  - name: BUILD_NAME
+    displayName: Build Name
+    description: The name of the build configuration resource that also matches image stream resource.
+    required: true
+  - name: APPLICATION_NAME
+    displayName: Application Name
+    description: Name of the application label that should be used in all resources.
+    required: true
+  - name: GIT_REPO
+    displayName: Git Repository
+    required: true
+  - name: GIT_BRANCH
+    displayName: Git Branch or Tag
+    required: true
+  - name: GIT_REPO_CONTEXT
+    displayName: Sub directory of Git Branch or Tag
+    required: true
+  - name: BASE_AMQ_IMAGE
+    displayName: Base amq image
+    required: true
+    value: "jboss-amq-63"
+  - name: BASE_AMQ_IMAGE_TAG
+    displayName: Base amq image tag
+    required: true
+    value: "1.3"
+  - name: BASE_AMQ_IMAGE_NS
+    displayName: Base amq image namespace
+    required: true
+    value: "openshift"
