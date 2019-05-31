@@ -10,7 +10,7 @@ oc delete dc,svc -l application=${APP_NAME}
 
 oc policy add-role-to-user view -z default
 
-oc new-app -f custom-amq63-postgres-persistent.yml \
+oc new-app -f ../../templates/custom-amq63-postgres-persistent.yml \
   -p APPLICATION_NAME=${APP_NAME}  \
   -p MQ_PROTOCOL="openwire, amqp"  \
   -p MQ_QUEUES=""  \

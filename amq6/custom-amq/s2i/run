@@ -1,4 +1,0 @@
-#!/bin/sh
-
-echo "Custom run script invoked"
-exec /opt/amq-custom/launch.sh

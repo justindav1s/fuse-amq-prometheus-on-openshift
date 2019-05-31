@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
 PROJECT=amq
+
+oc project $PROJECT
+
 BROKER_NUM=1
 APP_NAME=custom-amq6-broker-${BROKER_NUM}
 BUILD_NAME=${APP_NAME}-build
