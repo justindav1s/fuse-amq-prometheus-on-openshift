@@ -68,7 +68,7 @@ objects:
     - name: mesh
       port: 61616
     selector:
-      deploymentConfig: ${APPLICATION_NAME}-amq
+      mesh: "true"
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
@@ -88,6 +88,7 @@ objects:
         labels:
           application: ${APPLICATION_NAME}
           deploymentConfig: ${APPLICATION_NAME}-amq
+          mesh: "true"
         name: ${APPLICATION_NAME}-amq
       spec:
         containers:
