@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
+. ./global-env.sh
+
 export PROJECT=fuse-int
-export USER=justin
-export IP=ocp.datr.eu

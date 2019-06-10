@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
-PROJECT=amq
+. ../amq-env.sh
+
 BROKER_NUM=1
 APP_NAME=custom-amq6-broker-${BROKER_NUM}
 BUILD_NAME=${APP_NAME}-build
-
+POSTGRESQL_DB=amq_${BROKER_NUM}
 
 oc delete dc,svc -l application=${APP_NAME}
 
@@ -16,13 +17,14 @@ oc new-app -f ../../templates/custom-amq63-postgres-persistent.yml \
   -p MQ_QUEUES=""  \
   -p MQ_TOPICS=""  \
   -p MQ_SERIALIZABLE_PACKAGES="" \
-  -p MQ_USERNAME="justindav1s" \
-  -p MQ_PASSWORD="password" \
+  -p MQ_USERNAME=${AMQ_USERNAME} \
+  -p MQ_PASSWORD=${AMQ_PASSWORD} \
   -p AMQ_MESH_DISCOVERY_TYPE="kube" \
   -p AMQ_QUEUE_MEMORY_LIMIT="100mb" \
-  -p DB_URL="jdbc:postgresql://amq1-postgresql:5432/amq_${BROKER_NUM}" \
-  -p DB_USERNAME="amq" \
-  -p DB_PASSWORD="amq" \
-  -p IMAGE_STREAM="custom-amq6" \
-  -p IMAGE_STREAM_TAG="latest" \
-  -p IMAGE_STREAM_NAMESPACE="amq"
+  -p DB_URL="jdbc:postgresql://${POSTGRESQL_SERVICE_NAME}:5432/${POSTGRESQL_DB}" \
+  -p DB_USERNAME=${POSTGRESQL_USERNAME} \
+  -p DB_PASSWORD=${POSTGRESQL_PASSWORD} \
+  -p IMAGE_STREAM=${CUSTOM_IMAGE_NAME} \
+  -p IMAGE_STREAM_TAG=${CUSTOM_IMAGE_TAG} \
+  -p IMAGE_STREAM_NAMESPACE=${PROJECT} \
+  -p AMQ_SECRET_CONFIG_DIR="/etc/amq-secret-config-volume"

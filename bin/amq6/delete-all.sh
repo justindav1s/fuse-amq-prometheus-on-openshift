@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PROJECT=amq
+. ../amq-env.sh
 
 oc project $PROJECT
 

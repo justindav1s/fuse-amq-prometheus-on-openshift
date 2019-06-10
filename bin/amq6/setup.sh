@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-PROJECT=amq6
-USER=justin
-IP=ocp.datr.eu
+. ../amq-env.sh
 
 oc login https://${IP}:8443 -u $USER
 

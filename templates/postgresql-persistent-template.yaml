@@ -9,7 +9,7 @@ objects:
   metadata:
     labels:
       app: ${APP_NAME}
-    name: ${APP_NAME}
+    name: ${POSTGRESQL_SERVICE_NAME}
   spec:
     ports:
     - name: postgresql
@@ -130,6 +130,11 @@ parameters:
   description: Name of the application label that should be used in all resources.
   required: true
   value: "amq-postgresql"
+- name: POSTGRESQL_SERVICE_NAME
+  displayName: Postgresql Service Name
+  description: Postgresql Service Name
+  required: true
+  value: "postgresql"
 - name: DB_NAME
   displayName: Database Name
   description: Name of the Database

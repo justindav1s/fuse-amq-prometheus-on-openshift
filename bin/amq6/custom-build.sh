@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-PROJECT=amq
-APP_NAME=custom-amq6
+. ../amq-env.sh
+
+APP_NAME=${CUSTOM_IMAGE_NAME}
 BUILD_NAME=${APP_NAME}-docker-build
 
 oc project ${PROJECT}
@@ -35,7 +36,7 @@ oc process -f ../../templates/custom-amq6-s2i-bc-template.yaml \
   -p BASE_AMQ_IMAGE=${APP_NAME} \
   -p BASE_AMQ_IMAGE_TAG="docker" \
   -p BASE_AMQ_IMAGE_NS=${PROJECT} \
-  -p OUTPUT_IMAGE_TAG="latest" \
+  -p OUTPUT_IMAGE_TAG=${CUSTOM_IMAGE_TAG} \
   | oc create -f -
 
 oc start-build ${BUILD_NAME}
