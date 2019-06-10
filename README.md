@@ -12,12 +12,13 @@
 
    * [fuse/producer-app](fuse/producer-app) : source code for a Fuse route for AMQ message production, deployed with Spring-boot
 
-   * [templates](templates) : assorted Openshift templates reference by scrips in the bin directories
+   * [templates](templates) : assorted Openshift templates reference by scripts in the bin directories
 
    * [prometheus](prometheus) : Prometheus deployment and configuration TODO
 
    * [grafana](grafana) : Grafana deployment and configuration TODO
 
+   * [fuse-console](fuse-console) : Fuse Console deployment and configuration TODO
 
 ## References
 
