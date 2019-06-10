@@ -2,6 +2,13 @@
 
 . ../amq-env.sh
 
+
+cat <<EOF > config/users.properties
+# from secret volume
+
+${AMQ_USERNAME}=${AMQ_PASSWORD}
+EOF
+
 oc project $PROJECT
 
 BROKER_NUM=1

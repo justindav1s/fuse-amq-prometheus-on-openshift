@@ -5,12 +5,20 @@
 BROKER_NUM=3
 APP_NAME=${AMQ_APP_NAME_PREFIX}-${BROKER_NUM}
 BUILD_NAME=${APP_NAME}-build
+POSTGRESQL_DB=amq_${BROKER_NUM}
 
 oc project $PROJECT
 
 oc delete dc,svc -l application=${APP_NAME}
 
 oc policy add-role-to-user view -z default
+
+oc create secret generic ${APP_NAME}-secret-config \
+    --from-file=activemq.xml=config/activemq.xml \
+    --from-file=users.properties=config/users.properties \
+    --from-file=log4j.properties=config/log4j.properties
+
+sleep 2
 
 oc new-app -f ../../templates/custom-amq63-postgres-persistent.yml \
   -p APP_NAME=${APP_NAME} \
