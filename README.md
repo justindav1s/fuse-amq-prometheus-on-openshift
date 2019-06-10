@@ -8,13 +8,13 @@
 
    * [bin/fuse](bin/fuse) : scripts to build and deploy two toy Fuse Spring-boot microservices that produce and consume messages to and from the AMQ6 mesh
 
+   * [bin/fuse-console](bin/fuse-console) : Fuse Console deployment and configuration
+
    * [fuse/consumer-app](fuse/consumer-app) : source code for a Fuse route for AMQ message consumption, deployed with Spring-boot
 
    * [fuse/producer-app](fuse/producer-app) : source code for a Fuse route for AMQ message production, deployed with Spring-boot
 
    * [templates](templates) : assorted Openshift templates reference by scripts in the bin directories
-
-   * [fuse-console](fuse-console) : Fuse Console deployment and configuration
 
    * [prometheus](prometheus) : Prometheus deployment and configuration TODO
 
