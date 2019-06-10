@@ -2,7 +2,7 @@
 
 . ../global-env.sh
 
-export PROJECT=tmp
+export PROJECT=amq
 
 export CUSTOM_IMAGE_NAME="custom-amq6"
 export CUSTOM_IMAGE_TAG="latest"
