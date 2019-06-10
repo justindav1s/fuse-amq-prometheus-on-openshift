@@ -17,3 +17,6 @@ oc delete dc,svc -l application=${APP_NAME}
 BROKER_NUM=3
 APP_NAME=custom-amq6-broker-${BROKER_NUM}
 oc delete dc,svc -l application=${APP_NAME}
+
+APP_NAME=amq-postgresql
+oc delete dc,pvc,svc -l app=${APP_NAME}

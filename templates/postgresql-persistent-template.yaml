@@ -1,0 +1,177 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: postgresql-persistent-template
+objects:
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: ${APP_NAME}
+    name: ${APP_NAME}
+  spec:
+    ports:
+    - name: postgresql
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+    selector:
+      name: ${APP_NAME}
+    sessionAffinity: None
+    type: ClusterIP
+
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    labels:
+      app: ${APP_NAME}
+    name: ${APP_NAME}
+  spec:
+    replicas: 1
+    selector:
+      name: ${APP_NAME}
+    strategy:
+      activeDeadlineSeconds: 21600
+      recreateParams:
+        timeoutSeconds: 600
+      resources: {}
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          app: ${APP_NAME}
+          name: ${APP_NAME}
+      spec:
+        containers:
+        - env:
+          - name: POSTGRESQL_USER
+            value: ${DB_USERNAME}
+          - name: POSTGRESQL_PASSWORD
+            value: ${DB_PASSWORD}
+          - name: POSTGRESQL_DATABASE
+            value: ${DB_NAME}
+          image: "${REPOSITORY_URL}/${IMAGE_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG}"
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+              - /usr/libexec/check-container
+              - --live
+            failureThreshold: 3
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
+          name: ${APP_NAME}
+          ports:
+          - containerPort: 5432
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - /usr/libexec/check-container
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              memory: "${MEMORY_LIMIT}Gi"
+          securityContext:
+            capabilities: {}
+            privileged: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/pgsql/data
+            name: ${APP_NAME}-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: ${APP_NAME}-data
+          persistentVolumeClaim:
+            claimName: ${APP_NAME}
+    test: false
+    triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - ${APP_NAME}
+        from:
+          kind: ImageStreamTag
+          name: ${IMAGE_NAME}:${IMAGE_TAG}
+          namespace: ${IMAGE_NAMESPACE}
+      type: ImageChange
+    - type: ConfigChange
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    finalizers:
+      - kubernetes.io/pvc-protection
+    labels:
+      app: ${APP_NAME}
+    name: ${APP_NAME}
+  spec:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: "${VOLUME_GB}Gi"
+
+parameters:
+- name: APP_NAME
+  displayName: Application Name
+  description: Name of the application label that should be used in all resources.
+  required: true
+  value: "amq-postgresql"
+- name: DB_NAME
+  displayName: Database Name
+  description: Name of the Database
+  required: true
+  value: "amq"
+- name: DB_USERNAME
+  displayName: Database Username
+  description: Username of the Database
+  required: true
+  value: "amq"
+- name: DB_PASSWORD
+  displayName: Database Password
+  description: Password of the Database
+  required: true
+  value: "amq"
+- name: VOLUME_GB
+  displayName: Persient Volume size in GBs
+  description: Persient Volume size in GBs.
+  required: true
+  value: "1"
+- name: MEMORY_LIMIT
+  displayName: Memory size in GBs
+  description: Memory size in GBs.
+  required: true
+  value: "1"
+- name: IMAGE_NAME
+  displayName: Name of Container Iamge
+  description: Name of Container Iamge.
+  required: true
+  value: "postgresql"
+- name: IMAGE_TAG
+  displayName: Container Iamge tag
+  description: Container Iamge tag.
+  required: true
+  value: "9.6"
+- name: IMAGE_NAMESPACE
+  displayName: Namespace location of container image.
+  description: Namespace location of container image.
+  required: true
+  value: "openshift"
+- name: REPOSITORY_URL
+  displayName: Image reposirory location
+  description: Image reposirory location.
+  required: true
+  value: "docker-registry.default.svc:5000"
