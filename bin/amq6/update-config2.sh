@@ -3,8 +3,9 @@
 . ../amq-env.sh
 
 oc project $PROJECT
+
 BROKER_NUM=2
-APP_NAME=${APP_NAME_PREFIX}-${BROKER_NUM}
+APP_NAME=${AMQ_APP_NAME_PREFIX}-${BROKER_NUM}
 
 oc create secret generic ${APP_NAME}-secret-config \
     --from-file=activemq.xml=config/activemq.xml \

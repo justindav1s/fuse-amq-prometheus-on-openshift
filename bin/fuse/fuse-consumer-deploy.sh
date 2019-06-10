@@ -11,9 +11,9 @@ oc delete dc -l app=${APP_NAME}
 oc process -f ../../templates/fuse-app-deployment-template.yaml \
   -p APP_NAME=${APP_NAME} \
   -p AMQP_HOST="custom-amq6-broker-3-amq-amqp.amq.svc" \
-  -p AMQP_CONNECTION_STRING="failover:(amqp://custom-amq6-broker-2-amq-amqp.amq.svc:5672,amqp://custom-amq6-broker-3-amq-amqp.amq.svc:5672)?initialReconnectDelay=100" \
-  -p AMQP_USERNAME="amq" \
-  -p AMQP_PASSWORD="amq" \
+  -p AMQP_CONNECTION_STRING="failover:(amqp://${AMQ_APP_NAME_PREFIX}-2-amq-amqp.${PROJECT}.svc:5672,amqp://${AMQ_APP_NAME_PREFIX}-3-amq-amqp.${PROJECT}.svc:5672)?initialReconnectDelay=100" \
+  -p AMQP_USERNAME=${AMQ_USERNAME} \
+  -p AMQP_PASSWORD=${AMQ_PASSWORD} \
   -p APP_IMAGE=${APP_NAME} \
   -p APP_IMAGE_TAG="latest" \
   -p APP_IMAGE_NS=${PROJECT} | oc create -f -

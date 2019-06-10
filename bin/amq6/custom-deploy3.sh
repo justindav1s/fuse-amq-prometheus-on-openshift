@@ -3,9 +3,10 @@
 . ../amq-env.sh
 
 BROKER_NUM=3
-APP_NAME=${APP_NAME_PREFIX}-${BROKER_NUM}
+APP_NAME=${AMQ_APP_NAME_PREFIX}-${BROKER_NUM}
 BUILD_NAME=${APP_NAME}-build
 
+oc project $PROJECT
 
 oc delete dc,svc -l application=${APP_NAME}
 
