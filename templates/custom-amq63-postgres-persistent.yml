@@ -28,31 +28,31 @@ objects:
     annotations:
       description: The broker's AMQP port.
     labels:
-      application: ${APPLICATION_NAME}
-    name: ${APPLICATION_NAME}-amq-amqp
+      app: ${APP_NAME}
+    name: ${APP_NAME}-amq-amqp
   spec:
     ports:
     - port: 5672
       targetPort: 5672
     selector:
-      deploymentConfig: ${APPLICATION_NAME}-amq
+      deploymentConfig: ${APP_NAME}-amq
 - apiVersion: v1
   kind: Service
   metadata:
     annotations:
       description: The broker's OpenWire port.
-      service.alpha.openshift.io/dependencies: '[{"name": "${APPLICATION_NAME}-amq-amqp",
-        "kind": "Service"},{"name": "${APPLICATION_NAME}-amq-mqtt", "kind": "Service"},{"name":
-        "${APPLICATION_NAME}-amq-stomp", "kind": "Service"}]'
+      service.alpha.openshift.io/dependencies: '[{"name": "${APP_NAME}-amq-amqp",
+        "kind": "Service"},{"name": "${APP_NAME}-amq-mqtt", "kind": "Service"},{"name":
+        "${APP_NAME}-amq-stomp", "kind": "Service"}]'
     labels:
-      application: ${APPLICATION_NAME}
-    name: ${APPLICATION_NAME}-amq-tcp
+      app: ${APP_NAME}
+    name: ${APP_NAME}-amq-tcp
   spec:
     ports:
     - port: 61616
       targetPort: 61616
     selector:
-      deploymentConfig: ${APPLICATION_NAME}-amq
+      deploymentConfig: ${APP_NAME}-amq
 - apiVersion: v1
   kind: Service
   metadata:
@@ -60,7 +60,7 @@ objects:
       description: Supports node discovery for mesh formation.
       service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
     labels:
-      application: ${APPLICATION_NAME}
+      app: ${APP_NAME}
     name: ${AMQ_MESH_SERVICE_NAME}
   spec:
     clusterIP: None
@@ -73,12 +73,12 @@ objects:
   kind: DeploymentConfig
   metadata:
     labels:
-      application: ${APPLICATION_NAME}
-    name: ${APPLICATION_NAME}-amq
+      app: ${APP_NAME}
+    name: ${APP_NAME}-amq
   spec:
     replicas: 1
     selector:
-      deploymentConfig: ${APPLICATION_NAME}-amq
+      deploymentConfig: ${APP_NAME}-amq
     strategy:
       rollingParams:
         maxSurge: 0
@@ -86,10 +86,10 @@ objects:
     template:
       metadata:
         labels:
-          application: ${APPLICATION_NAME}
-          deploymentConfig: ${APPLICATION_NAME}-amq
+          app: ${APP_NAME}
+          deploymentConfig: ${APP_NAME}-amq
           mesh: "true"
-        name: ${APPLICATION_NAME}-amq
+        name: ${APP_NAME}-amq
       spec:
         containers:
         - env:
@@ -119,17 +119,17 @@ objects:
             value: ${AMQ_QUEUE_MEMORY_LIMIT}
           - name: JAVA_OPTS_APPEND
             value: -javaagent:/opt/prometheus/jmx_prometheus_javaagent.jar=9779:/opt/prometheus/prometheus-config.yml
-          - name: AMQ_SECRET_CONFIG_DIR
-            value: /etc/amq-secret-config-volume
           - name: DB_URL
             value: ${DB_URL}
           - name: DB_USERNAME
             value: ${DB_USERNAME}
           - name: DB_PASSWORD
             value: ${DB_PASSWORD}
+          - name: AMQ_SECRET_CONFIG_DIR
+            value: ${AMQ_SECRET_CONFIG_DIR}
           image: ${IMAGE_STREAM}
           imagePullPolicy: Always
-          name: ${APPLICATION_NAME}-amq
+          name: ${APP_NAME}-amq
           ports:
           - containerPort: 8778
             name: jolokia
@@ -155,12 +155,20 @@ objects:
               - /bin/bash
               - -c
               - /opt/amq/bin/readinessProbe.sh
+          volumeMounts:
+            - mountPath: ${AMQ_SECRET_CONFIG_DIR}
+              name: ${APP_NAME}-secret-config-volume
+              readOnly: true
         terminationGracePeriodSeconds: 60
+        volumes:
+          - name: ${APP_NAME}-secret-config-volume
+            secret:
+              secretName: ${APP_NAME}-secret-config
     triggers:
     - imageChangeParams:
         automatic: true
         containerNames:
-        - ${APPLICATION_NAME}-amq
+        - ${APP_NAME}-amq
         from:
           kind: ImageStreamTag
           name: ${IMAGE_STREAM}:${IMAGE_STREAM_TAG}
@@ -171,7 +179,7 @@ objects:
 parameters:
 - description: The name for the application.
   displayName: Application Name
-  name: APPLICATION_NAME
+  name: APP_NAME
   required: true
   value: broker
 - description: 'Protocols to configure, separated by commas.  Allowed values are:
@@ -236,4 +244,10 @@ parameters:
   required: true
 - name: AMQ_MESH_SERVICE_NAME
   value: "amq-mesh"
+  required: true
+- name: AMQ_MESH_SERVICE_NAME
+  value: "amq-mesh"
+  required: true
+- name: AMQ_SECRET_CONFIG_DIR
+  value: "/etc/amq-secret-config-volume"
   required: true
