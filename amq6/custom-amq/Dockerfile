@@ -1,4 +1,5 @@
 FROM docker-registry.default.svc:5000/openshift/jboss-amq-63:1.3
+FROM docker-registry.default.svc:5000/tmp/custom-amq6:s2i
 
 # Temporary switch to root
 USER root
