@@ -12,6 +12,8 @@
 
    * [fuse/producer-app](fuse/producer-app) : source code for a Fuse route for AMQ message production, deployed with Spring-boot
 
+   * [templates](templates) : assorted Openshift templates reference by scrips in the bin directories
+
 
 ## References
 
