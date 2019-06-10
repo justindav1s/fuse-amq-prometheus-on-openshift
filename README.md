@@ -14,6 +14,10 @@
 
    * [templates](templates) : assorted Openshift templates reference by scrips in the bin directories
 
+   * [prometheus](prometheus) : Prometheus deployment and configuration TODO
+
+   * [grafana](grafana) : Grafana deployment and configuration TODO
+
 
 ## References
 
