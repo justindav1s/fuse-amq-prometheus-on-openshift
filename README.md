@@ -1,10 +1,13 @@
 # Fuse and AMQ6
 
 ## Repository Contents
-   * [bin/amq6](bin/amq6) : scripts to build an active-active-active AMQ6 broker mesh based on a custom image, with the following characteristics :
+   * [bin/amq6](bin/amq6) : scripts to build and deploy an active-active-active AMQ6 broker mesh based on a custom image, with the following characteristics :
       * Postgresql JDBC driver on board
       * Prometheus Node Exporter for Broker JMX metrics
       * Broker configuration mounted as a secrets volume
+
+   * [bin/fuse](bin/fuse) : scripts to build and deploy two toy Fuse Spring-boot microservices that produce and consume messages to and from the AMQ6 mesh
+
 
 # Supported Configs
 
