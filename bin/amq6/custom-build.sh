@@ -36,7 +36,7 @@ BUILD_NAME=${APP_NAME}-docker-build
 oc delete is ${APP_NAME}
 oc delete bc ${BUILD_NAME}
 
-# Docker build to add postgres and prometheus drivers
+# Docker build to add postgres and prometheus drivers (do this one last, as the s2i build can blow away changes made by this one)
 oc process -f ../../templates/custom-amq6-docker-bc-template.yaml \
   -p BUILD_NAME=${BUILD_NAME}  \
   -p APPLICATION_NAME=${APP_NAME}  \
