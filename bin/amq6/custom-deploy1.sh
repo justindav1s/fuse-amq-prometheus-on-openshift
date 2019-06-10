@@ -8,12 +8,14 @@ BUILD_NAME=${APP_NAME}-build
 POSTGRESQL_DB=amq_${BROKER_NUM}
 
 oc delete dc,svc -l app=${APP_NAME}
-oc delete secret custom-broker-secret-config
 oc delete secret ${APP_NAME}-secret-config
 
 oc policy add-role-to-user view -z default
 
-oc create secret generic ${APP_NAME}-secret-config --from-file=test.properties=config/test.properties
+oc create secret generic ${APP_NAME}-secret-config \
+    --from-file=activemq.xml=config/activemq.xml \
+    --from-file=users.properties=config/users.properties \
+    --from-file=log4j.properties=config/log4j.properties
 
 sleep 2
 
