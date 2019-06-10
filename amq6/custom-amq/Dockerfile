@@ -17,7 +17,7 @@ EXPOSE 9779
 
 RUN curl https://jdbc.postgresql.org/download/postgresql-42.2.5.jar -o /opt/amq/lib/extra/postgresql-42.2.5.jar
 
-COPY ./bin/launch.sh /opt/amq-custom
+COPY ./bin/launch.sh /opt/amq-custom/launch.sh
 RUN chmod -R 777 /opt/amq-custom
 
 # Override default launch.

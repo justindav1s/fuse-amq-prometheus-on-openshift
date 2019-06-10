@@ -7,9 +7,15 @@ APP_NAME=custom-amq6-broker-${BROKER_NUM}
 BUILD_NAME=${APP_NAME}-build
 POSTGRESQL_DB=amq_${BROKER_NUM}
 
-oc delete dc,svc -l application=${APP_NAME}
+oc delete dc,svc -l app=${APP_NAME}
+oc delete secret custom-broker-secret-config
+oc delete secret ${APP_NAME}-secret-config
 
 oc policy add-role-to-user view -z default
+
+oc create secret generic ${APP_NAME}-secret-config --from-file=test.properties=config/test.properties
+
+sleep 2
 
 oc new-app -f ../../templates/custom-amq63-postgres-persistent.yml \
   -p APP_NAME=${APP_NAME}  \
