@@ -27,3 +27,13 @@ https://github.com/lbroudoux/openshift-cases
 https://github.com/yohanesws/amq63-mariadb-ocp
 
 https://blog.joshdreagan.com/2017/03/25/scaling_jboss_a-mq_on_openshift/
+
+
+### Create extr databases on postgresql
+
+1. remote shell onto postgresql pod
+2. psql amq postgres
+3. CREATE DATABASE amq_1 with OWNER amq;
+3. CREATE DATABASE amq_2 with OWNER amq;
+3. CREATE DATABASE amq_3 with OWNER amq;
+
