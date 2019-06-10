@@ -14,11 +14,13 @@
 
    * [templates](templates) : assorted Openshift templates reference by scripts in the bin directories
 
+   * [fuse-console](fuse-console) : Fuse Console deployment and configuration
+
    * [prometheus](prometheus) : Prometheus deployment and configuration TODO
 
    * [grafana](grafana) : Grafana deployment and configuration TODO
 
-   * [fuse-console](fuse-console) : Fuse Console deployment and configuration TODO
+
 
 ## References
 
