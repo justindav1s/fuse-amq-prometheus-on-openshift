@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. ./env.sh
+. ../fuse-env.sh
 
 oc project ${PROJECT}
 
