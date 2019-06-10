@@ -8,6 +8,9 @@
 
    * [bin/fuse](bin/fuse) : scripts to build and deploy two toy Fuse Spring-boot microservices that produce and consume messages to and from the AMQ6 mesh
 
+   * [fuse/consumer-app](fuse/consumer-app) : source code for a Fuse route for AMQ message consumption, deployed with Spring-boot
+
+   * [fuse/producer-app](fuse/producer-app) : source code for a Fuse route for AMQ message production, deployed with Spring-boot
 
 # Supported Configs
 
