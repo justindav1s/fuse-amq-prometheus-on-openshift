@@ -98,6 +98,23 @@ objects:
           namespace: ${APP_IMAGE_NS}
       type: ImageChange
 
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: ${APP_NAME}
+    name: ${APP_NAME}
+  spec:
+    ports:
+      - name: jolokia
+        port: 8778
+        protocol: TCP
+        targetPort: 8778
+    selector:
+      name: ${APP_NAME}
+    sessionAffinity: None
+    type: ClusterIP
+
 parameters:
 - name: APP_NAME
   displayName: Application Name

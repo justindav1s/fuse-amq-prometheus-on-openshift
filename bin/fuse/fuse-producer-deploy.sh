@@ -6,7 +6,7 @@ oc project ${PROJECT}
 
 APP_NAME=producer-app
 
-oc delete dc -l app=${APP_NAME}
+oc delete dc,svc -l app=${APP_NAME}
 
 oc process -f ../../templates/fuse-app-deployment-template.yaml \
   -p APP_NAME=${APP_NAME} \
