@@ -3,7 +3,7 @@
 . ../amq-env.sh
 
 BROKER_NUM=1
-APP_NAME=custom-amq6-broker-${BROKER_NUM}
+APP_NAME=${APP_NAME_PREFIX}-${BROKER_NUM}
 BUILD_NAME=${APP_NAME}-build
 POSTGRESQL_DB=amq_${BROKER_NUM}
 
