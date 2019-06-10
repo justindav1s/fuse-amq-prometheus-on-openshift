@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-. ./global-env.sh
+. ../global-env.sh
 
-export PROJECT=amq
+export PROJECT=tmp
 
 export CUSTOM_IMAGE_NAME="custom-amq6"
 export CUSTOM_IMAGE_TAG="latest"

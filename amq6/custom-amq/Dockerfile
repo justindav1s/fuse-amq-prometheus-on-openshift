@@ -17,12 +17,13 @@ EXPOSE 9779
 
 RUN curl https://jdbc.postgresql.org/download/postgresql-42.2.5.jar -o /opt/amq/lib/extra/postgresql-42.2.5.jar
 
-
-## S2I requires a numeric, non-0 UID. This is the UID for the jboss user in the base image
-USER 185
-
 COPY ./bin/launch.sh /opt/amq-custom
 RUN chmod -R 777 /opt/amq-custom
 
 # Override default launch.
 CMD [ "/opt/amq-custom/launch.sh" ]
+
+
+## S2I requires a numeric, non-0 UID. This is the UID for the jboss user in the base image
+USER 185
+
