@@ -9,6 +9,7 @@ objects:
   metadata:
     labels:
       app: ${APP_NAME}
+      deploymentconfig: ${APP_NAME}
     name: ${APP_NAME}
   spec:
     replicas: 1
@@ -28,6 +29,7 @@ objects:
       metadata:
         labels:
           app: ${APP_NAME}
+          deploymentconfig: ${APP_NAME}
       spec:
         containers:
         - env:
@@ -114,7 +116,7 @@ objects:
         protocol: TCP
         targetPort: 8778
     selector:
-      name: ${APP_NAME}
+      deploymentconfig: ${APP_NAME}
     sessionAffinity: None
     type: ClusterIP
 
@@ -131,9 +133,25 @@ objects:
         protocol: TCP
         targetPort: 9779
     selector:
-      name: ${APP_NAME}
+      deploymentconfig: ${APP_NAME}
     sessionAffinity: None
     type: ClusterIP
+
+- apiVersion: v1
+  kind: Route
+  metadata:
+    annotations:
+    labels:
+      app: ${APP_NAME}
+    name: ${APP_NAME}-prometheus
+  spec:
+    port:
+      targetPort: prometheus
+    to:
+      kind: Service
+      name: ${APP_NAME}-prometheus
+      weight: 100
+    wildcardPolicy: None
 
 parameters:
 - name: APP_NAME

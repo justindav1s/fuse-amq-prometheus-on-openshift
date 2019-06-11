@@ -176,6 +176,39 @@ objects:
       type: ImageChange
     - type: ConfigChange
 
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: ${APP_NAME}
+    name: ${APP_NAME}-prometheus
+  spec:
+    ports:
+      - name: prometheus
+        port: 9779
+        protocol: TCP
+        targetPort: 9779
+    selector:
+      deploymentconfig: ${APP_NAME}
+    sessionAffinity: None
+    type: ClusterIP
+
+- apiVersion: v1
+  kind: Route
+  metadata:
+    annotations:
+    labels:
+      app: ${APP_NAME}
+    name: ${APP_NAME}-prometheus
+  spec:
+    port:
+      targetPort: prometheus
+    to:
+      kind: Service
+      name: ${APP_NAME}-prometheus
+      weight: 100
+    wildcardPolicy: None
+
 parameters:
 - description: The name for the application.
   displayName: Application Name
