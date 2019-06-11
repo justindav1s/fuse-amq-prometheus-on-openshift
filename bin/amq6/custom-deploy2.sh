@@ -9,7 +9,7 @@ POSTGRESQL_DB=amq_${BROKER_NUM}
 
 oc project $PROJECT
 
-oc delete dc,svc -l app=${APP_NAME}
+oc delete dc,svc,route -l app=${APP_NAME}
 oc delete secret ${APP_NAME}-secret-config
 
 oc policy add-role-to-user view -z default

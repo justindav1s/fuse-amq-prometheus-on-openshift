@@ -74,6 +74,7 @@ objects:
   metadata:
     labels:
       app: ${APP_NAME}
+      deploymentConfig: ${APP_NAME}
     name: ${APP_NAME}
   spec:
     replicas: 1
@@ -190,8 +191,6 @@ objects:
         targetPort: 9779
     selector:
       deploymentconfig: ${APP_NAME}
-    sessionAffinity: None
-    type: ClusterIP
 
 - apiVersion: v1
   kind: Route
@@ -208,6 +207,8 @@ objects:
       name: ${APP_NAME}-prometheus
       weight: 100
     wildcardPolicy: None
+    selector:
+      deploymentconfig: ${APP_NAME}
 
 parameters:
 - description: The name for the application.
