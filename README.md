@@ -47,6 +47,10 @@ https://blog.openshift.com/enhanced-openshift-jboss-amq-container-image-for-prod
 
 https://access.redhat.com/containers/?tab=overview#/registry.access.redhat.com/jboss-amq-6/amq63-openshift
 
+# Fuse Prometheus Node Exporter
+
+https://brunonetid.github.io/2017/11/27/camel-prometheus-openshift.html
+
 ### Based on this
 
 https://github.com/lbroudoux/openshift-cases

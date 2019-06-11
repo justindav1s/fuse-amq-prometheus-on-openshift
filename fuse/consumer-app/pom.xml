@@ -74,6 +74,16 @@
       <artifactId>activemq-jms-pool</artifactId>
     </dependency>
 
+    <!-- required by Prometheus -->
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-netty4-http</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-metrics</artifactId>
+    </dependency>
+
     <!-- testing -->
     <dependency>
       <groupId>junit</groupId>
@@ -155,6 +165,56 @@
           </execution>
         </executions>
       </plugin>
+
+      <!-- added dependencecies to support Prometheus Node Exporter -->
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+              <useBaseVersion>true</useBaseVersion>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>io.prometheus.jmx</groupId>
+                  <artifactId>jmx_prometheus_javaagent</artifactId>
+                  <version>0.11.0</version>
+                  <outputDirectory>${project.build.directory}/docker/${project.artifactId}/${project.version}/build/maven/agent</outputDirectory>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-resources</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/docker/${project.artifactId}/${project.version}/build/maven/agent</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>src/main/resources</directory>
+                  <includes>
+                    <include>prometheus-config.yaml</include>
+                  </includes>
+                  <filtering>false</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
     </plugins>
   </build>
 </project>

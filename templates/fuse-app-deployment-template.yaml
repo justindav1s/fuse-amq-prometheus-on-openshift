@@ -61,6 +61,9 @@ objects:
           - containerPort: 8778
             name: jolokia
             protocol: TCP
+          - containerPort: 9779
+            name: prometheus
+            protocol: TCP
           readinessProbe:
             failureThreshold: 3
             httpGet:
@@ -103,13 +106,30 @@ objects:
   metadata:
     labels:
       app: ${APP_NAME}
-    name: ${APP_NAME}
+    name: ${APP_NAME}-jolokia
   spec:
     ports:
       - name: jolokia
         port: 8778
         protocol: TCP
         targetPort: 8778
+    selector:
+      name: ${APP_NAME}
+    sessionAffinity: None
+    type: ClusterIP
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: ${APP_NAME}
+    name: ${APP_NAME}-prometheus
+  spec:
+    ports:
+      - name: prometheus
+        port: 9779
+        protocol: TCP
+        targetPort: 9779
     selector:
       name: ${APP_NAME}
     sessionAffinity: None
