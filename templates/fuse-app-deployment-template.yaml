@@ -125,6 +125,7 @@ objects:
   metadata:
     labels:
       app: ${APP_NAME}
+      team: fuse-app
     name: ${APP_NAME}-prometheus
   spec:
     ports:

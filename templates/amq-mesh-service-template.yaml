@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Template
+labels:
+  template: amq-mesh-service-template
+message: A service shared seperate deployments of AMQ 6 that allpws them to form a mesh
+metadata:
+  annotations:
+    description: A service shared seperate deployments of AMQ 6 that allpws them to form a mesh
+    openshift.io/display-name: Custom JBoss A-MQ 6.3 Mesh Service (no SSL, DB persistent)
+    openshift.io/provider-display-name: Red Hat, Inc.
+    tags: messaging,amq,jboss
+    template.openshift.io/documentation-url: https://access.redhat.com/documentation/en/red-hat-jboss-amq/
+    template.openshift.io/long-description: This template defines resources needed
+      to develop Red Hat JBoss A-MQ 6.3 based application, including a deployment
+      configuration and using persistence.
+    template.openshift.io/support-url: https://access.redhat.com
+  name: amq-mesh-service-template
+objects:
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      annotations:
+        description: Supports node discovery for mesh formation.
+        service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+      labels:
+        app: ${APP_NAME}
+      name: ${AMQ_MESH_SERVICE_NAME}
+    spec:
+      clusterIP: None
+      ports:
+        - name: mesh
+          port: 61616
+      selector:
+        mesh: "true"
+
+parameters:
+- description: The name for the application.
+  displayName: Application Name
+  name: APP_NAME
+  required: true
+  value: "amq-mesh-service"
+- name: AMQ_MESH_SERVICE_NAME
+  value: "amq-mesh"
+  required: true

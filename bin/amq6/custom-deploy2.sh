@@ -37,4 +37,5 @@ oc new-app -f ../../templates/custom-amq63-postgres-persistent.yml \
   -p IMAGE_STREAM=${CUSTOM_IMAGE_NAME} \
   -p IMAGE_STREAM_TAG=${CUSTOM_IMAGE_TAG} \
   -p IMAGE_STREAM_NAMESPACE=${PROJECT} \
+  -p AMQ_MESH_SERVICE_NAME="amq-mesh" \
   -p AMQ_SECRET_CONFIG_DIR="/etc/amq-secret-config-volume"
