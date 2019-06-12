@@ -19,6 +19,11 @@ parameters:
     value: fuse
     required: true
     description: Namespace in which the prometheus-operator is installed.
+  - name: NAMESPACE_LIST
+    displayName: Namespace List to be monitored
+    value: fuse-app
+    required: true
+    description: Monirorable Namespace list (comma seperated, no space eg. app1,app2.
   - name: CPU_REQUEST
     displayName: CPU request
     value: '100m'
@@ -54,83 +59,151 @@ parameters:
     displayName: Port Name
     value: 'web'
     required: true
-  - name: FUSE_SERVICE_TEAM
-    displayName: Fuse Service team label
-    value: 'fuse'
+  - name: SERVICE_TEAM
+    displayName: Service team label
+    value: 'myteam'
     requited: true
 
 
 objects:
-  #
-  # OpenShift resources
-  #
-  - apiVersion: rbac.authorization.k8s.io/v1
-    kind: ClusterRoleBinding
+
+# Prometheus Operator security and access
+  - apiVersion: v1
+    kind: ServiceAccount
     metadata:
       name: prometheus-operator
       labels:
         app: prometheus
+      namespace: ${NAMESPACE}
+
+#for the operator hosting namespace
+  - apiVersion: rbac.authorization.k8s.io/v1
+    kind: Role
+    metadata:
+      name: prometheus-operator
+      namespace: ${NAMESPACE}
+    rules:
+      - apiGroups:
+          - apiextensions.k8s.io
+        resources:
+          - customresourcedefinitions
+        verbs:
+          - '*'
+      - apiGroups:
+          - monitoring.coreos.com
+        resources:
+          - alertmanagers
+          - prometheuses
+          - prometheuses/finalizers
+          - alertmanagers/finalizers
+          - servicemonitors
+          - prometheusrules
+        verbs:
+          - '*'
+      - apiGroups:
+          - apps
+        resources:
+          - statefulsets
+        verbs:
+          - '*'
+      - apiGroups:
+          - ""
+        resources:
+          - configmaps
+          - secrets
+        verbs:
+          - '*'
+      - apiGroups:
+          - ""
+        resources:
+          - pods
+        verbs:
+          - list
+          - delete
+      - apiGroups:
+          - ""
+        resources:
+          - services
+          - endpoints
+        verbs:
+          - get
+          - create
+          - update
+      - apiGroups:
+          - ""
+        resources:
+          - nodes
+        verbs:
+          - list
+          - watch
+      - apiGroups:
+          - ""
+        resources:
+          - namespaces
+        verbs:
+          - get
+          - list
+          - watch
+
+  - apiVersion: rbac.authorization.k8s.io/v1
+    kind: RoleBinding
+    metadata:
+      name: prometheus-operator
+      namespace: ${NAMESPACE}
     roleRef:
       apiGroup: rbac.authorization.k8s.io
-      kind: ClusterRole
+      kind: Role
       name: prometheus-operator
     subjects:
       - kind: ServiceAccount
         name: prometheus-operator
         namespace: ${NAMESPACE}
 
-  - apiVersion: rbac.authorization.k8s.io/v1
-    kind: ClusterRole
-    metadata:
-      name: prometheus-operator
-      labels:
-        app: prometheus
-    rules:
-      - verbs:
-          - '*'
-        apiGroups:
-          - '*'
-        resources:
-          - '*'
-      - verbs:
-          - '*'
-        nonResourceURLs:
-          - '*'
 
-  - apiVersion: rbac.authorization.k8s.io/v1
-    kind: ClusterRoleBinding
+# Prometheus security and access
+  - apiVersion: v1
+    kind: ServiceAccount
     metadata:
       name: prometheus
       labels:
         app: prometheus
+      namespace: ${NAMESPACE}
+
+# for the hosting namespace
+  - apiVersion: rbac.authorization.k8s.io/v1
+    kind: Role
+    metadata:
+      namespace: ${NAMESPACE}
+      name: prometheus
+    rules:
+      - apiGroups: [""]
+        resources:
+          - nodes
+          - nodes/proxy
+          - services
+          - endpoints
+          - pods
+        verbs: ["get", "list", "watch"]
+      - apiGroups: [""]
+        resources:
+          - configmaps
+        verbs: ["get"]
+
+  - apiVersion: rbac.authorization.k8s.io/v1beta1
+    kind: RoleBinding
+    metadata:
+      name: prometheus
+      namespace: ${NAMESPACE}
     roleRef:
       apiGroup: rbac.authorization.k8s.io
-      kind: ClusterRole
+      kind: Role
       name: prometheus
     subjects:
       - kind: ServiceAccount
         name: prometheus
         namespace: ${NAMESPACE}
 
-  - apiVersion: rbac.authorization.k8s.io/v1
-    kind: ClusterRole
-    metadata:
-      name: prometheus
-      labels:
-        app: prometheus
-    rules:
-      - verbs:
-          - '*'
-        apiGroups:
-          - '*'
-        resources:
-          - '*'
-      - verbs:
-          - '*'
-        nonResourceURLs:
-          - '*'
-
-
+# Deployables
   - apiVersion: apps/v1beta2
     kind: Deployment
     metadata:
@@ -152,7 +225,7 @@ objects:
           containers:
             - args:
                 - --manage-crds=false
-                - --namespaces=amq,fuse-int
+                - --namespaces=${NAMESPACE_LIST}
                 - --logtostderr=true
                 - --config-reloader-image=quay.io/coreos/configmap-reload:v0.0.1
                 - --prometheus-config-reloader=quay.io/coreos/prometheus-config-reloader:v0.24.0
@@ -170,14 +243,6 @@ objects:
                   memory: ${MEMORY_REQUEST}
           serviceAccountName: prometheus-operator
 
-  - apiVersion: v1
-    kind: ServiceAccount
-    metadata:
-      name: prometheus-operator
-      labels:
-        app: prometheus
-      namespace: ${NAMESPACE}
-
   - apiVersion: monitoring.coreos.com/v1
     kind: Prometheus
     metadata:
@@ -190,7 +255,7 @@ objects:
       serviceAccountName: prometheus
       serviceMonitorSelector:
         matchLabels:
-          team: ${FUSE_SERVICE_TEAM}
+          team: ${SERVICE_TEAM}
       resources:
         requests:
           memory: ${PROMETHEUS_MEMORY}
@@ -212,46 +277,6 @@ objects:
       selector:
         prometheus: prometheus
 
-  - apiVersion: v1
-    kind: ServiceAccount
-    metadata:
-      name: prometheus
-      labels:
-        app: prometheus
-      namespace: ${NAMESPACE}
-
-#  - apiVersion: rbac.authorization.k8s.io/v1
-#    kind: Role
-#    metadata:
-#      namespace: ${NAMESPACE}
-#      name: prometheus
-#    rules:
-#      - apiGroups: [""]
-#        resources:
-#          - nodes
-#          - nodes/proxy
-#          - services
-#          - endpoints
-#          - pods
-#        verbs: ["get", "list", "watch"]
-#      - apiGroups: [""]
-#        resources:
-#          - configmaps
-#        verbs: ["get"]
-#
-#  - apiVersion: rbac.authorization.k8s.io/v1beta1
-#    kind: RoleBinding
-#    metadata:
-#      name: prometheus
-#      namespace: ${NAMESPACE}
-#    roleRef:
-#      apiGroup: rbac.authorization.k8s.io
-#      kind: Role
-#      name: prometheus
-#    subjects:
-#      - kind: ServiceAccount
-#        name: prometheus
-#        namespace: ${NAMESPACE}
 
   - apiVersion: v1
     kind: Route
