@@ -5,7 +5,7 @@ All templates used here are based templates found here :
 
 
 
-1. run [prometheus/deploy-crds.sh](prometheus/deploy-crds.sh) if your cluster has never had the prometheus operator deployed to it.
-2. Decide whether you want to deploy prometheus with cluster privileges or not.
+1. run [deploy-crds.sh](deploy-crds.sh) if your cluster has never had the prometheus operator deployed to it.
+2. decide whether you want to deploy prometheus with cluster privileges or not.
     * YES : edit and then run [prometheus/deploy-prometheus-cluster.sh](prometheus/deploy-prometheus-cluster.sh), after providing namespaces and service names that need to be monitored.
     * NO : edit and then run [prometheus/deploy-prometheus-namespaces-template.sh](prometheus/deploy-prometheus-namespaces-template.sh), after providing namespaces and service names that need to be monitored. This script will also setup Roles and Rolebindings for prometheus in monitorable namespaces.
