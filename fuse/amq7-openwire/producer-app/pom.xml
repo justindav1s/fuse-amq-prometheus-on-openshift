@@ -66,20 +66,31 @@
 
     <!-- activemq -->
     <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-jms-starter</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-activemq</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.activemq</groupId>
+          <artifactId>activemq-broker</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
-    <dependency>
-      <groupId>org.apache.activemq</groupId>
-      <artifactId>activemq-jms-pool</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.activemq</groupId>
-      <artifactId>activemq-client</artifactId>
-      <version>5.11.0.redhat-630329</version>
-    </dependency>
+<!--    &lt;!&ndash; Camel &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>org.apache.camel</groupId>-->
+<!--      <artifactId>camel-spring-boot-starter</artifactId>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <groupId>org.apache.camel</groupId>-->
+<!--      <artifactId>camel-activemq</artifactId>-->
+<!--      <exclusions>-->
+<!--        <exclusion>-->
+<!--          <groupId>org.apache.activemq</groupId>-->
+<!--          <artifactId>activemq-broker</artifactId>-->
+<!--        </exclusion>-->
+<!--      </exclusions>-->
+<!--    </dependency>-->
 
     <!-- required by Prometheus -->
     <dependency>
