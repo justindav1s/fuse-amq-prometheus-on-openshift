@@ -15,11 +15,11 @@
  */
 package io.fabric8.quickstarts.camel.amq;
 
-import org.apache.activemq.jms.pool.PooledConnectionFactory;
-import org.apache.camel.component.amqp.AMQPComponent;
+//import org.apache.activemq.jms.pool.PooledConnectionFactory;
+//import org.apache.camel.component.amqp.AMQPComponent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.qpid.jms.JmsConnectionFactory;
+//import org.apache.qpid.jms.JmsConnectionFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -38,22 +38,22 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-    @Bean(name = "amq-component")
-    AMQPComponent amqpComponent(AMQPConfiguration config) {
-
-        JmsConnectionFactory qpid = null;
-
-        if (config.getConnection_string() != null) {
-            log.info("Connection string : " + config.getConnection_string());
-            qpid = new JmsConnectionFactory(config.getUsername(), config.getPassword(), config.getConnection_string());
-        }
-
-        qpid.setTopicPrefix("topic://");
-
-        PooledConnectionFactory factory = new PooledConnectionFactory();
-        factory.setConnectionFactory(qpid);
-
-        return new AMQPComponent(factory);
-    }
+//    @Bean(name = "amq-component")
+//    AMQPComponent amqpComponent(AMQPConfiguration config) {
+//
+//        JmsConnectionFactory qpid = null;
+//
+//        if (config.getConnection_string() != null) {
+//            log.info("Connection string : " + config.getConnection_string());
+//            qpid = new JmsConnectionFactory(config.getUsername(), config.getPassword(), config.getConnection_string());
+//        }
+//
+//        qpid.setTopicPrefix("topic://");
+//
+//        PooledConnectionFactory factory = new PooledConnectionFactory();
+//        factory.setConnectionFactory(qpid);
+//
+//        return new AMQPComponent(factory);
+//    }
 
 }
