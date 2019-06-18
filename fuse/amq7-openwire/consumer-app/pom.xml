@@ -33,7 +33,6 @@
 
   <dependencies>
 
-    <!-- Enabling health checks -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
@@ -48,30 +47,29 @@
         </exclusion>
       </exclusions>
     </dependency>
-	  <dependency>
-		  <groupId>org.springframework.boot</groupId>
-		  <artifactId>spring-boot-starter-undertow</artifactId>
-    </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-configuration-processor</artifactId>
-      <optional>true</optional>
+      <artifactId>spring-boot-starter-undertow</artifactId>
     </dependency>
 
-    <!-- Camel -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-activemq</artifactId>
+    </dependency>
+
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-spring-boot-starter</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-amqp-starter</artifactId>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-pool</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.apache.activemq</groupId>
-      <artifactId>activemq-jms-pool</artifactId>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-jms</artifactId>
     </dependency>
 
     <!-- required by Prometheus -->
@@ -103,6 +101,16 @@
     <dependency>
       <groupId>io.fabric8</groupId>
       <artifactId>kubernetes-assertions</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-test-spring</artifactId>
       <scope>test</scope>
     </dependency>
 

@@ -13,7 +13,7 @@
  *  implied.  See the License for the specific language governing
  *  permissions and limitations under the License.
  */
-package io.fabric8.quickstarts.camel.amq;
+package org.jnd.camel.demo;
 
 import org.apache.camel.CamelContext;
 import org.springframework.stereotype.Component;

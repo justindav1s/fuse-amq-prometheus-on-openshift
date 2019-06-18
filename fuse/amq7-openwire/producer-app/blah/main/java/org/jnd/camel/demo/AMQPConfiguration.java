@@ -1,4 +1,4 @@
-package io.fabric8.quickstarts.camel.amq;
+package org.jnd.camel.demo;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

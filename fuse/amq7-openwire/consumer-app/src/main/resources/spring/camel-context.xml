@@ -33,7 +33,7 @@
           requirements for either of the <when/> elements will follow another route.
         -->
         <route id="jms-cbr-route" streamCache="true">
-            <from id="route-from-incoming-orders" uri="amqp:queue:incomingOrders"/>
+            <from id="route-from-incoming-orders" uri="jms:queue:incomingOrders"/>
             <choice id="route-choose-country">
                 <when id="route-when-uk">
                     <xpath>/order/customer/country = 'UK'</xpath>
