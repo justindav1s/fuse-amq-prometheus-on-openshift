@@ -38,14 +38,12 @@ objects:
               fieldRef:
                 apiVersion: v1
                 fieldPath: metadata.namespace
-          - name: AMQP_HOST
-            value: ${AMQP_HOST}
-          - name: AMQP_CONNECTION_STRING
-            value: ${AMQP_CONNECTION_STRING}
-          - name: AMQP_USERNAME
-            value: ${AMQP_USERNAME}
-          - name: AMQP_PASSWORD
-            value: ${AMQP_PASSWORD}
+          - name: AMQ_CONNECTION_STRING
+            value: ${AMQ_CONNECTION_STRING}
+          - name: AMQ_USERNAME
+            value: ${AMQ_USERNAME}
+          - name: AMQ_PASSWORD
+            value: ${AMQ_PASSWORD}
           image: "${APP_IMAGE}:${APP_IMAGE_TAG}"
           imagePullPolicy: Always
           livenessProbe:
@@ -159,16 +157,13 @@ parameters:
   displayName: Application Name
   description: Name of the application label that should be used in all resources.
   required: true
-- name: AMQP_HOST
-  displayName: Address where amq6 amqp endpoint is listening
-  required: false
-- name: AMQP_CONNECTION_STRING
+- name: AMQ_CONNECTION_STRING
   displayName: Use this as the broker address if something more complicated is required
   required: false
-- name: AMQP_USERNAME
+- name: AMQ_USERNAME
   displayName: amq6 username
   required: true
-- name: AMQP_PASSWORD
+- name: AMQ_PASSWORD
   displayName: amq6 password
   required: true
 - name: APP_IMAGE

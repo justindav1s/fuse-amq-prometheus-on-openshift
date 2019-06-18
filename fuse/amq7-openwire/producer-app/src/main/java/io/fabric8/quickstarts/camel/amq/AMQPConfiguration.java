@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
  * Configuration parameters filled in from application.properties and overridden using env variables on Openshift.
  */
 @Configuration
-@ConfigurationProperties(prefix = "amqp")
+@ConfigurationProperties(prefix = "amq")
 public class AMQPConfiguration {
 
     private Log log = LogFactory.getLog(AMQPConfiguration.class);

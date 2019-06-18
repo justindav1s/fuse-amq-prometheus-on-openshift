@@ -38,7 +38,7 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-    @Bean(name = "amqp-component")
+    @Bean(name = "amq-component")
     AMQPComponent amqpComponent(AMQPConfiguration config) {
 
         JmsConnectionFactory qpid = null;
@@ -46,10 +46,6 @@ public class Application {
         if (config.getConnection_string() != null) {
             log.info("Connection string : " + config.getConnection_string());
             qpid = new JmsConnectionFactory(config.getUsername(), config.getPassword(), config.getConnection_string());
-        }
-        else {
-            log.info("Connection host : " + config.getHost());
-            qpid = new JmsConnectionFactory(config.getUsername(), config.getPassword(), "amqp://" + config.getHost() + ":" + config.getPort());
         }
 
         qpid.setTopicPrefix("topic://");
