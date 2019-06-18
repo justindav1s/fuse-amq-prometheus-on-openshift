@@ -10,7 +10,7 @@ AMQ_NAMESPACE=amq7
 
 oc delete dc,svc -l app=${APP_NAME}
 
-oc process -f ../../templates/fuse-app-deployment-template.yaml \
+oc process -f ../../../templates/fuse-amq7-app-deployment-template.yaml \
   -p APP_NAME=${APP_NAME} \
   -p AMQ_CONNECTION_STRING="tcp://broker-amq-headless.${AMQ_NAMESPACE}.svc:61616" \
   -p AMQ_USERNAME="admin" \

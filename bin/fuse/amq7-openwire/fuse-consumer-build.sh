@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. ../../../fuse-env.sh
+. ../../fuse-env.sh
 
 oc project ${PROJECT}
 
@@ -11,7 +11,7 @@ REPO_CONTEXT=fuse/amq7-openwire/${APP_NAME}
 oc delete is ${APP_NAME}
 oc delete bc ${BUILD_NAME}
 
-oc process -f ../../templates/fuse-app-bc-template.yaml \
+oc process -f ../../../templates/fuse-amq7-app-bc-template.yaml \
   -p BUILD_NAME=${BUILD_NAME}  \
   -p APPLICATION_NAME=${APP_NAME}  \
   -p GIT_REPO="https://github.com/justindav1s/amq.git"  \
