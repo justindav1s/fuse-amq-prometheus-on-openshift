@@ -58,6 +58,9 @@ objects:
             timeoutSeconds: 1
           name: ${APP_NAME}
           ports:
+          - containerPort: 8081
+            name: health
+            protocol: TCP
           - containerPort: 8778
             name: jolokia
             protocol: TCP
@@ -149,6 +152,39 @@ objects:
     to:
       kind: Service
       name: ${APP_NAME}-prometheus
+      weight: 100
+    wildcardPolicy: None
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: ${APP_NAME}
+    name: ${APP_NAME}-health
+  spec:
+    ports:
+      - name: health
+        port: 8081
+        protocol: TCP
+        targetPort: 8081
+    selector:
+      deploymentconfig: ${APP_NAME}
+    sessionAffinity: None
+    type: ClusterIP
+
+- apiVersion: v1
+  kind: Route
+  metadata:
+    annotations:
+    labels:
+      app: ${APP_NAME}
+    name: ${APP_NAME}-health
+  spec:
+    port:
+      targetPort: health
+    to:
+      kind: Service
+      name: ${APP_NAME}-health
       weight: 100
     wildcardPolicy: None
 
