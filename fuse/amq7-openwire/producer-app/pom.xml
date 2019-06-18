@@ -15,8 +15,8 @@
     <fuse.version>7.3.0.fuse-730058-redhat-00001</fuse.version>
 
     <!-- maven plugin versions -->
-    <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
-    <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
+    <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+    <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
   </properties>
 
   <dependencyManagement>
