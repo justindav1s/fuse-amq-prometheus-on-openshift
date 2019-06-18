@@ -66,14 +66,8 @@
 
     <!-- activemq -->
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-activemq</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.apache.activemq</groupId>
-          <artifactId>activemq-broker</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-jms</artifactId>
     </dependency>
 
 <!--    &lt;!&ndash; Camel &ndash;&gt;-->
