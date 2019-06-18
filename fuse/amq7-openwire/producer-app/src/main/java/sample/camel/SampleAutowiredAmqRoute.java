@@ -24,12 +24,12 @@ public class SampleAutowiredAmqRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from("activemq:foo")
+        from("jms:foo")
             .to("log:sample");
 
         from("timer:bar")
             .setBody(constant("Hello from Camel"))
-            .to("activemq:foo");
+            .to("jms:foo");
     }
 
 }
