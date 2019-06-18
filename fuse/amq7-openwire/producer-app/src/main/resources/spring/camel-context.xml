@@ -22,7 +22,7 @@
                 <method method="generateFileName" ref="orderGenerator"/>
             </setHeader>
             <log id="route-log-order" message="Generating order ${file:name}"/>
-            <to id="route-to-incoming-orders" uri="amqp:queue:incomingOrders"/>
+            <to id="route-to-incoming-orders" uri="amq:queue:incomingOrders"/>
         </route>
         <!--
           This route consumes messages from the JMS queue incomingOrders on the ActiveMQ broker within the ESB.
