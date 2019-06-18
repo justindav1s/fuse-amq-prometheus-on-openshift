@@ -22,9 +22,10 @@ echo '{"kind": "ServiceAccount", "apiVersion": "v1", "metadata": {"name": "amq-s
 
 oc policy add-role-to-user view system:serviceaccount:${PROJECT}:amq-service-account
 
-oc import-image my-amq-broker-7/amq-broker-72-openshift:1.3-4 --from=registry.access.redhat.com/amq-broker-7/amq-broker-72-openshift:1.3-4 --confirm
+oc secrets new amq-app-secret broker.ks
 
-oc new-app -f amq-broker-72-persistence-clustered.yaml \
+
+oc new-app -f ../../templates/amq73-persistence-clustered.yaml \
     -p APPLICATION_NAME=broker \
     -p AMQ_PROTOCOL=openwire,amqp,stomp,mqtt,hornetq \
     -p AMQ_QUEUES=demoQueue \
@@ -40,6 +41,11 @@ oc new-app -f amq-broker-72-persistence-clustered.yaml \
     -p AMQ_CLUSTER_PASSWORD=changeme \
     -p AMQ_GLOBAL_MAX_SIZE="1 gb" \
     -p AMQ_REQUIRE_LOGIN=true \
+    -p AMQ_SECRET=amq-app-secret \
+    -p AMQ_TRUSTSTORE=broker.ts \
+    -p AMQ_TRUSTSTORE_PASSWORD=changeme \
+    -p AMQ_KEYSTORE=broker.ks \
+    -p AMQ_KEYSTORE_PASSWORD=changeme \
     -p AMQ_DATA_DIR=/opt/amq/data \
     -p AMQ_DATA_DIR_LOGGING=true \
     -p AMQ_EXTRA_ARGS= \
@@ -47,7 +53,7 @@ oc new-app -f amq-broker-72-persistence-clustered.yaml \
     -p AMQ_MULTICAST_PREFIX= \
     -p IMAGE=registry.access.redhat.com/amq-broker-7/amq-broker-72-openshift:1.3-4
 
-oc new-app -f console-route.yaml \
+oc new-app -f ../../templates/amq7-console-route-ssl.yaml \
     -p PROJECT=${PROJECT}
 
 

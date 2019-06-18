@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-. ../fuse-env.sh
+. ../../fuse-env.sh
 
 oc project ${PROJECT}
 
-APP_NAME=consumer-app
+APP_NAME=producer-app
 BUILD_NAME=${APP_NAME}-build
 
 oc delete is ${APP_NAME}

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. ../fuse-env.sh
+. ../../fuse-env.sh
 
 oc login https://${IP}:8443 -u $USER
 

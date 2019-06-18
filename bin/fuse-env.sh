@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-. ../global-env.sh
+. ../../global-env.sh
 
 export PROJECT=fuse-int

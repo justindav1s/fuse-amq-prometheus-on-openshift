@@ -22,11 +22,9 @@ echo '{"kind": "ServiceAccount", "apiVersion": "v1", "metadata": {"name": "amq-s
 
 oc policy add-role-to-user view system:serviceaccount:${PROJECT}:amq-service-account
 
-oc secrets new amq-app-secret broker.ks
+oc import-image amq-broker-7/amq-broker-73-openshift --from=registry.redhat.io/amq-broker-7/amq-broker-73-openshift --confirm -n openshift
 
-oc import-image my-amq-broker-7/amq-broker-72-openshift:1.3-4 --from=registry.access.redhat.com/amq-broker-7/amq-broker-72-openshift:1.3-4 --confirm
-
-oc new-app -f amq-broker-72-persistence-clustered-ssl.yaml \
+oc new-app -f ../../templates/amq73-persistence-clustered.yaml \
     -p APPLICATION_NAME=broker \
     -p AMQ_PROTOCOL=openwire,amqp,stomp,mqtt,hornetq \
     -p AMQ_QUEUES=demoQueue \
@@ -37,24 +35,19 @@ oc new-app -f amq-broker-72-persistence-clustered-ssl.yaml \
     -p AMQ_ROLE=admin \
     -p AMQ_NAME=broker \
     -p AMQ_CLUSTERED=true \
-    -p AMQ_REPLICAS=2 \
+    -p AMQ_REPLICAS=3 \
     -p AMQ_CLUSTER_USER=cluster_user \
     -p AMQ_CLUSTER_PASSWORD=changeme \
     -p AMQ_GLOBAL_MAX_SIZE="1 gb" \
     -p AMQ_REQUIRE_LOGIN=true \
-    -p AMQ_SECRET=amq-app-secret \
-    -p AMQ_TRUSTSTORE=broker.ts \
-    -p AMQ_TRUSTSTORE_PASSWORD=changeme \
-    -p AMQ_KEYSTORE=broker.ks \
-    -p AMQ_KEYSTORE_PASSWORD=changeme \
     -p AMQ_DATA_DIR=/opt/amq/data \
     -p AMQ_DATA_DIR_LOGGING=true \
     -p AMQ_EXTRA_ARGS= \
     -p AMQ_ANYCAST_PREFIX= \
     -p AMQ_MULTICAST_PREFIX= \
-    -p IMAGE=registry.access.redhat.com/amq-broker-7/amq-broker-72-openshift:1.3-4
+    -p IMAGE=docker-registry.default.svc:5000/openshift/amq-broker-73-openshift:latest
 
-oc new-app -f console-route-ssl.yaml \
+oc new-app -f ../../templates/amq7-console-route.yaml \
     -p PROJECT=${PROJECT}
 
 
