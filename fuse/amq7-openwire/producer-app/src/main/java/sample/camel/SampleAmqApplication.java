@@ -19,10 +19,12 @@ package sample.camel;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ImportResource;
 
 //CHECKSTYLE:OFF
 @SpringBootApplication
 @EnableAutoConfiguration
+@ImportResource({"classpath:spring/camel-context.xml"})
 public class SampleAmqApplication {
 
     public static void main(String[] args) {
