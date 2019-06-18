@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package sample.camel;
+package org.jnd.camel.demo;
 
 import java.util.concurrent.TimeUnit;
 
@@ -29,7 +29,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(CamelSpringBootRunner.class)
-@SpringBootTest(classes = SampleAmqApplication.class)
+@SpringBootTest(classes = Amq7Application.class)
 public class SampleAmqApplicationTests {
     @Autowired
     private CamelContext camelContext;

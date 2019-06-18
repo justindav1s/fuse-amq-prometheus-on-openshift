@@ -14,21 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package sample.camel;
+package org.jnd.camel.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportResource;
 
-//CHECKSTYLE:OFF
 @SpringBootApplication
 @EnableAutoConfiguration
 @ImportResource({"classpath:spring/camel-context.xml"})
-public class SampleAmqApplication {
+public class Amq7Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(SampleAmqApplication.class, args);
+        SpringApplication.run(Amq7Application.class, args);
     }
 }
-// CHECKSTYLE:ON
