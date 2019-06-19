@@ -22,7 +22,10 @@ echo '{"kind": "ServiceAccount", "apiVersion": "v1", "metadata": {"name": "amq-s
 
 oc policy add-role-to-user view system:serviceaccount:${PROJECT}:amq-service-account
 
-oc import-image amq-broker-7/amq-broker-73-openshift --from=registry.redhat.io/amq-broker-7/amq-broker-73-openshift --confirm -n openshift
+oc create secret generic ${APP_NAME}-secret-config \
+    --from-file=activemq.xml=config/broker.xml
+
+sleep 2
 
 oc new-app -f ../../templates/amq73-persistence-clustered.yaml \
     -p APPLICATION_NAME=broker \

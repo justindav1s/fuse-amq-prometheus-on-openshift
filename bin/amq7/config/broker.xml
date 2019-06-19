@@ -18,6 +18,7 @@ specific language governing permissions and limitations
 under the License.
 -->
 
+<!-- haha -->
 <configuration xmlns="urn:activemq"
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -26,7 +27,7 @@ under the License.
     <core xmlns="urn:activemq:core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="urn:activemq:core ">
 
-        <name>broker</name>
+        <name>${AMQ_NAME}</name>
 
 
         <persistence-enabled>true</persistence-enabled>
@@ -100,7 +101,7 @@ under the License.
 
         <connectors>
             <!-- Connector used to be announced through cluster connections and notifications -->
-            <connector name="artemis">tcp://broker-amq-0.broker-amq-headless.amq7.svc.cluster.local:61616</connector>
+            <connector name="artemis">tcp://${BROKER_IP}:61616</connector>
         </connectors>
 
 
@@ -142,26 +143,14 @@ under the License.
                        See https://issues.apache.org/jira/browse/ARTEMIS-1644 for more information. -->
 
             <!-- Acceptor for every supported protocol -->
-            <acceptor name="artemis">tcp://broker-amq-0.broker-amq-headless.amq7.svc.cluster.local:61616?tcpSendBufferSize=1048576;tcpReceiveBufferSize=1048576;protocols=CORE,AMQP,STOMP,HORNETQ,MQTT,OPENWIRE;useEpoll=true;amqpCredits=1000;amqpLowCredits=300</acceptor>
-
-            <!-- AMQP Acceptor.  Listens on default AMQP port for AMQP traffic.-->
-            <acceptor name="amqp">tcp://broker-amq-0.broker-amq-headless.amq7.svc.cluster.local:5672?tcpSendBufferSize=1048576;tcpReceiveBufferSize=1048576;protocols=AMQP;useEpoll=true;amqpCredits=1000;amqpLowCredits=300</acceptor>
-
-            <!-- STOMP Acceptor. -->
-            <acceptor name="stomp">tcp://broker-amq-0.broker-amq-headless.amq7.svc.cluster.local:61613?tcpSendBufferSize=1048576;tcpReceiveBufferSize=1048576;protocols=STOMP;useEpoll=true</acceptor>
-
-            <!-- HornetQ Compatibility Acceptor.  Enables HornetQ Core and STOMP for legacy HornetQ clients. -->
-            <acceptor name="hornetq">tcp://broker-amq-0.broker-amq-headless.amq7.svc.cluster.local:5445?anycastPrefix=jms.queue.;multicastPrefix=jms.topic.;protocols=HORNETQ,STOMP;useEpoll=true</acceptor>
-
-            <!-- MQTT Acceptor -->
-            <acceptor name="mqtt">tcp://broker-amq-0.broker-amq-headless.amq7.svc.cluster.local:1883?tcpSendBufferSize=1048576;tcpReceiveBufferSize=1048576;protocols=MQTT;useEpoll=true</acceptor>
+            <acceptor name="artemis">tcp://${BROKER_IP}:61616?tcpSendBufferSize=1048576;tcpReceiveBufferSize=1048576;protocols=CORE,AMQP,STOMP,HORNETQ,MQTT,OPENWIRE;useEpoll=true;amqpCredits=1000;amqpLowCredits=300</acceptor>
 
         </acceptors>
 
 
-        <cluster-user>cluster_user</cluster-user>
+        <cluster-user>${AMQ_CLUSTER_USER}</cluster-user>
 
-        <cluster-password>changeme</cluster-password>
+        <cluster-password>${AMQ_CLUSTER_PASSWORD}</cluster-password>
 
         <broadcast-groups>
             <broadcast-group name="my-broadcast-group">          <jgroups-file>jgroups-ping.xml</jgroups-file>          <jgroups-channel>activemq_broadcast_channel</jgroups-channel>          <connector-ref>artemis</connector-ref>       </broadcast-group>

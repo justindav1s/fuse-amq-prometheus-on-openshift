@@ -319,7 +319,14 @@ objects:
           volumeMounts:
           - name: ${APPLICATION_NAME}-amq-pvol
             mountPath: ${AMQ_DATA_DIR}
+          - mountPath: "/opt/amq/etc/configmap"
+            name: ${APP_NAME}-secret-config-volume
+            readOnly: true
         terminationGracePeriodSeconds: 60
+        volumes:
+          - name: ${APP_NAME}-secret-config-volume
+            secret:
+              secretName: ${APP_NAME}-secret-config
     volumeClaimTemplates:
     - apiVersion: v1
       kind: PersistentVolumeClaim
