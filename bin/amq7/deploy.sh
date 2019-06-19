@@ -5,30 +5,41 @@
 HOST=ocp.datr.eu
 USER=justin
 PROJECT=amq7
+APPLICATION_NAME=broker
 
-oc login https://${HOST}:8443 -u $USER
-
-oc delete project $PROJECT
-oc adm new-project $PROJECT 2> /dev/null
-while [ $? \> 0 ]; do
-    sleep 1
-    printf "."
-oc adm new-project $PROJECT 2> /dev/null
-done
+#oc login https://${HOST}:8443 -u $USER
+#
+#oc delete project $PROJECT
+#oc adm new-project $PROJECT 2> /dev/null
+#while [ $? \> 0 ]; do
+#    sleep 1
+#    printf "."
+#oc adm new-project $PROJECT 2> /dev/null
+#done
 
 oc project $PROJECT
+
+oc delete statefulset broker-amq
+oc delete route console-jolokia
+oc delete svc broker-amq-headless
+oc delete svc ping
+oc delete serviceaccounts broker-service-account
+oc delete role broker-role
+oc delete rolebinding broker-role-binding
+oc delete secret broker-secret-config
+
 
 echo '{"kind": "ServiceAccount", "apiVersion": "v1", "metadata": {"name": "amq-service-account"}}' | oc create -f -
 
 oc policy add-role-to-user view system:serviceaccount:${PROJECT}:amq-service-account
 
-oc create secret generic ${APP_NAME}-secret-config \
-    --from-file=activemq.xml=config/broker.xml
+oc create secret generic ${APPLICATION_NAME}-secret-config \
+    --from-file=broker.xml=config/broker.xml
 
 sleep 2
 
 oc new-app -f ../../templates/amq73-persistence-clustered.yaml \
-    -p APPLICATION_NAME=broker \
+    -p APPLICATION_NAME=${APPLICATION_NAME} \
     -p AMQ_PROTOCOL=openwire,amqp,stomp,mqtt,hornetq \
     -p AMQ_QUEUES=demoQueue \
     -p AMQ_ADDRESSES= \
