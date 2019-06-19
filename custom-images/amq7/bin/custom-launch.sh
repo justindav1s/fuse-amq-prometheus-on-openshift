@@ -226,14 +226,14 @@ function configure() {
     if [ "$AMQ_RESET_CONFIG" = "true" ]; then
       AMQ_ARGS="$AMQ_ARGS --force"
     fi
-    if [ "$AMQ_EXTRA_ARGS" ]; then
-      AMQ_ARGS="$AMQ_ARGS $AMQ_EXTRA_ARGS"
-    fi
+#    if [ "$AMQ_EXTRA_ARGS" ]; then
+#      AMQ_ARGS="$AMQ_ARGS $AMQ_EXTRA_ARGS"
+#    fi
     configureNetworking
     configureSSL
 
     echo "Creating Broker with args $AMQ_ARGS"
-    $AMQ_HOME/bin/artemis create ${instanceDir} $AMQ_ARGS --java-options "$JAVA_OPTS"
+    $AMQ_HOME/bin/artemis create ${instanceDir} $AMQ_ARGS --java-options "$JAVA_OPTS $AMQ_EXTRA_ARGS"
 
     if [ "$AMQ_CLUSTERED" = "true" ]; then
       modifyDiscovery

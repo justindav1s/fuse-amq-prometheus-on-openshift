@@ -285,7 +285,7 @@ objects:
           - name: AMQ_CLUSTER_PASSWORD
             value: ${AMQ_CLUSTER_PASSWORD}
           - name: AMQ_EXTRA_ARGS
-            value: "-javaagent:/opt/prometheus/jmx_prometheus_javaagent.jar=9779:/opt/prometheus/prometheus-config.yml"
+            value: -javaagent:/opt/prometheus/jmx_prometheus_javaagent.jar=9779:/opt/prometheus/prometheus-config.yml
           - name: AMQ_ANYCAST_PREFIX
             value: ${AMQ_ANYCAST_PREFIX}
           - name: AMQ_MULTICAST_PREFIX
