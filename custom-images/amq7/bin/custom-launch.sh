@@ -266,7 +266,7 @@ function runServer() {
   echo "Evaluating $AMQ_SECRET_CONFIG_DIR for configuration files in secret volume..."
   # Overwrite config with custom one in secret if provided.
   if [ "$(ls $AMQ_SECRET_CONFIG_DIR)" ]; then
-    echo "Found files into configuration secret, overriding /opt/amq/conf/"
+    echo "Found files into configuration secret, overriding $instanceDir"
     cp -f "$AMQ_SECRET_CONFIG_DIR"/* $instanceDir
   fi
   ## Custom it ends
