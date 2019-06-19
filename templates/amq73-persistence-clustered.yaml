@@ -97,6 +97,10 @@ objects:
       name: stomp
       protocol: TCP
       targetPort: 61613
+    - port: 9779
+      name: prometheus
+      protocol: TCP
+      targetPort: 9779
     selector:
       deploymentConfig: ${APPLICATION_NAME}-amq
     type: ClusterIP
@@ -317,6 +321,9 @@ objects:
             protocol: TCP
           - containerPort: 61616
             name: all
+            protocol: TCP
+          - containerPort: 9779
+            name: prometheus
             protocol: TCP
           volumeMounts:
           - name: ${APPLICATION_NAME}-amq-pvol

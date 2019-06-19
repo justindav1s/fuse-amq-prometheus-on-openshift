@@ -26,6 +26,24 @@ objects:
       weight: 100
     wildcardPolicy: Subdomain
 
+- apiVersion: v1
+  kind: Route
+  metadata:
+    labels:
+      app: broker
+      application: broker
+    name: prometheus
+  spec:
+    host: star.prometheus.${PROJECT}.svc
+    port:
+      targetPort: prometheus
+    to:
+      kind: Service
+      name: broker-amq-headless
+      weight: 100
+    wildcardPolicy: Subdomain
+
+
 parameters:
 - description: The name for the Project.
   displayName: Project Name
