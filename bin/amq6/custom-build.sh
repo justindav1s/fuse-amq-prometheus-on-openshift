@@ -20,7 +20,7 @@ oc process -f ../../templates/custom-amq6-s2i-bc-template.yaml \
   -p APPLICATION_NAME=${APP_NAME}  \
   -p GIT_REPO="https://github.com/justindav1s/amq.git"  \
   -p GIT_BRANCH=master  \
-  -p GIT_REPO_CONTEXT="amq6/custom-amq"  \
+  -p GIT_REPO_CONTEXT="custom-images/amq7"  \
   -p BASE_AMQ_IMAGE=${BASE_IMAGE} \
   -p BASE_AMQ_IMAGE_TAG=${BASE_IMAGE_TAG} \
   -p BASE_AMQ_IMAGE_NS=${BASE_IMAGE_NS} \

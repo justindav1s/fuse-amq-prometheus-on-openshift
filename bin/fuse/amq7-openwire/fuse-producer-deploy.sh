@@ -11,7 +11,7 @@ oc delete dc,svc -l app=${APP_NAME}
 
 oc process -f ../../../templates/fuse-amq7-app-deployment-template.yaml \
   -p APP_NAME=${APP_NAME} \
-  -p AMQ_CONNECTION_STRING="tcp://broker-amq-headless.amq7.svc:61616" \
+  -p AMQ_CONNECTION_STRING="failover:(tcp://broker-amq-0.broker-amq-headless.${AMQ_NAMESPACE}.svc:61616,tcp://broker-amq-1.broker-amq-headless.${AMQ_NAMESPACE}.svc:61616)?randomize=false&initialReconnectDelay=100" \
   -p AMQ_USERNAME="admin" \
   -p AMQ_PASSWORD="changeme" \
   -p APP_IMAGE=${APP_NAME} \
