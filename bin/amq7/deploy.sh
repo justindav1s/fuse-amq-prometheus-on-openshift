@@ -45,7 +45,7 @@ oc new-app -f ../../templates/amq73-persistence-clustered.yaml \
     -p AMQ_EXTRA_ARGS= \
     -p AMQ_ANYCAST_PREFIX= \
     -p AMQ_MULTICAST_PREFIX= \
-    -p IMAGE=docker-registry.default.svc:5000/openshift/amq-broker-73-openshift:latest
+    -p IMAGE=docker-registry.default.svc:5000/amq7/custom-amq7:7.3.custom
 
 oc new-app -f ../../templates/amq7-console-route.yaml \
     -p PROJECT=${PROJECT}
