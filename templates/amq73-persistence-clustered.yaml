@@ -291,7 +291,7 @@ objects:
               fieldRef:
                 fieldPath: metadata.namespace
           - name: SCRIPT_DEBUG
-            value: true
+            value: "true"
           readinessProbe:
             exec:
               command:

@@ -100,7 +100,7 @@ under the License.
 
         <connectors>
             <!-- Connector used to be announced through cluster connections and notifications -->
-            <connector name="artemis">tcp://${HOSTNAME}.broker-amq-headless.${POD_NAMESPACE}.svc.cluster.local:61616</connector>
+            <connector name="artemis">${BROKER_IP}</connector>
         </connectors>
 
 
