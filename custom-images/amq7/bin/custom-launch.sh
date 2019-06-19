@@ -262,14 +262,14 @@ function runServer() {
   echo "Configuring Broker"
   instanceDir="${HOME}/${AMQ_NAME}"
 
-  ## Custom it starts
+  ## Custom bit starts
   echo "Evaluating $AMQ_SECRET_CONFIG_DIR for configuration files in secret volume..."
   # Overwrite config with custom one in secret if provided.
   if [ "$(ls $AMQ_SECRET_CONFIG_DIR)" ]; then
     echo "Found files into configuration secret, overriding /opt/amq/conf/"
     cp -f "$AMQ_SECRET_CONFIG_DIR"/* "/opt/amq/conf/"
   fi
-  ## Custom it ends
+  ## Custom bit ends
 
   configure $instanceDir
 
