@@ -61,7 +61,7 @@ oc new-app -f ../../templates/amq73-persistence-clustered.yaml \
     -p AMQ_ANYCAST_PREFIX= \
     -p AMQ_MULTICAST_PREFIX= \
     -p AMQ_SECRET_CONFIG_DIR="/opt/amq/etc/configmap" \
-    -p IMAGE=docker-registry.default.svc:5000/$PROJECT/custom-amq7:latest
+    -p IMAGE=docker-registry.default.svc:5000/openshift/amq-broker-73-openshift:7.3
 
 
 oc new-app -f ../../templates/amq7-console-route.yaml \
