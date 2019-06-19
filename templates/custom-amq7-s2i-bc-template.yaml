@@ -31,7 +31,7 @@ objects:
           forcePull: true
           from:
             kind: ImageStreamTag
-            name: "docker-registry.default.svc:5000/${BASE_AMQ_IMAGE}:${BASE_AMQ_IMAGE_TAG}"
+            name: "${BASE_AMQ_IMAGE}:${BASE_AMQ_IMAGE_TAG}"
             namespace: ${BASE_AMQ_IMAGE_NS}
           incremental: true
       output:

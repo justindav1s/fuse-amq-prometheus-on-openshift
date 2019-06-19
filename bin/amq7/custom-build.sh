@@ -17,13 +17,13 @@ oc project ${PROJECT}
 BUILD_NAME=${APP_NAME}-s2i-build
 oc delete bc ${BUILD_NAME}
 
-oc secrets new-dockercfg rh_pull_secret \
+oc secrets new-dockercfg rh-pull-secret \
     --docker-server=registry.redhat.io \
     --docker-username=${RHDN_USERNAME} \
     --docker-password=${RHDN_PASSWORD} \
     --docker-email=openshift@openshift.com
 
-oc secrets link builder rh_pull_secret
+oc secrets link builder rh-pull-secret
 
 # s2i build to add custom config from configuration folder
 oc process -f ../../templates/custom-amq7-s2i-bc-template.yaml \
