@@ -291,7 +291,9 @@ objects:
               fieldRef:
                 fieldPath: metadata.namespace
           - name: SCRIPT_DEBUG
-            value: "true"
+            value: "false"
+          - name: AMQ_SECRET_CONFIG_DIR
+            value: ${AMQ_SECRET_CONFIG_DIR}
           readinessProbe:
             exec:
               command:
@@ -319,7 +321,7 @@ objects:
           volumeMounts:
           - name: ${APPLICATION_NAME}-amq-pvol
             mountPath: ${AMQ_DATA_DIR}
-          - mountPath: "/opt/amq/etc/configmap"
+          - mountPath: ${AMQ_SECRET_CONFIG_DIR}
             name: ${APPLICATION_NAME}-secret-config-volume
             readOnly: true
         terminationGracePeriodSeconds: 60
@@ -428,3 +430,8 @@ parameters:
   name: IMAGE
   required: true
   value: registry.redhat.io/amq-broker-7/amq-broker-73-openshift:7.3
+- description: Location of custom config
+  displayName: Location of custom config
+  name: AMQ_SECRET_CONFIG_DIR
+  required: true
+  value: "/opt/amq/etc/configmap"

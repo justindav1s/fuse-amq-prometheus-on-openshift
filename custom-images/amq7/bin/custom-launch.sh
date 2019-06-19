@@ -257,10 +257,24 @@ function removeWhiteSpace() {
   echo $*|tr -s ''| tr -d [[:space:]]
 }
 
+echo "Evaluating $AMQ_SECRET_CONFIG_DIR for configuration files in secret volume..."
+# Overwrite config with custom one in secret if provided.
+if [ "$(ls $AMQ_SECRET_CONFIG_DIR)" ]; then
+  echo "Found files into configuration secret, overriding $AMQ_HOME/conf/"
+  cp -f "$AMQ_SECRET_CONFIG_DIR"/* "$AMQ_HOME/conf/"
+fi
+
 function runServer() {
 
   echo "Configuring Broker"
   instanceDir="${HOME}/${AMQ_NAME}"
+
+  echo "Evaluating $AMQ_SECRET_CONFIG_DIR for configuration files in secret volume..."
+  # Overwrite config with custom one in secret if provided.
+  if [ "$(ls $AMQ_SECRET_CONFIG_DIR)" ]; then
+    echo "Found files into configuration secret, overriding ${HOME}/${AMQ_NAME}/etc/"
+    cp -f "$AMQ_SECRET_CONFIG_DIR"/* "${HOME}/${AMQ_NAME}/etc/"
+  fi
 
   configure $instanceDir
 

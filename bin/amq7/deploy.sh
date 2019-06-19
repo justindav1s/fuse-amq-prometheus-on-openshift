@@ -24,6 +24,7 @@ oc delete route console-jolokia
 oc delete svc broker-amq-headless
 oc delete svc ping
 oc delete serviceaccounts broker-service-account
+oc delete serviceaccounts ${APPLICATION_NAME}-service-account
 oc delete role broker-role
 oc delete rolebinding broker-role-binding
 oc delete secret broker-secret-config
@@ -31,7 +32,7 @@ oc delete secret broker-secret-config
 
 echo '{"kind": "ServiceAccount", "apiVersion": "v1", "metadata": {"name": "amq-service-account"}}' | oc create -f -
 
-oc policy add-role-to-user view system:serviceaccount:${PROJECT}:amq-service-account
+oc policy add-role-to-user view system:serviceaccount:${PROJECT}:${APPLICATION_NAME}-service-account
 
 oc create secret generic ${APPLICATION_NAME}-secret-config \
     --from-file=broker.xml=config/broker.xml
@@ -59,7 +60,9 @@ oc new-app -f ../../templates/amq73-persistence-clustered.yaml \
     -p AMQ_EXTRA_ARGS= \
     -p AMQ_ANYCAST_PREFIX= \
     -p AMQ_MULTICAST_PREFIX= \
+    -p AMQ_SECRET_CONFIG_DIR="/opt/amq/etc/configmap" \
     -p IMAGE=docker-registry.default.svc:5000/openshift/amq-broker-73-openshift:7.3
+
 
 oc new-app -f ../../templates/amq7-console-route.yaml \
     -p PROJECT=${PROJECT}
