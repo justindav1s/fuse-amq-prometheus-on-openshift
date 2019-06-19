@@ -142,7 +142,7 @@ under the License.
                        See https://issues.apache.org/jira/browse/ARTEMIS-1644 for more information. -->
 
             <!-- Acceptor for every supported protocol -->
-            <acceptor name="artemis">tcp://${HOSTNAME}.broker-amq-headless.${POD_NAMESPACE}.svc.cluster.local:61616?tcpSendBufferSize=1048576;tcpReceiveBufferSize=1048576;protocols=CORE,AMQP,STOMP,HORNETQ,MQTT,OPENWIRE;useEpoll=true;amqpCredits=1000;amqpLowCredits=300</acceptor>
+            <acceptor name="artemis">tcp://broker-amq-0.broker-amq-headless.amq7.svc.cluster.local:61616?tcpSendBufferSize=1048576;tcpReceiveBufferSize=1048576;protocols=CORE,AMQP,STOMP,HORNETQ,MQTT,OPENWIRE;useEpoll=true;amqpCredits=1000;amqpLowCredits=300</acceptor>
 
         </acceptors>
 
