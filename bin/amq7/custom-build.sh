@@ -12,7 +12,9 @@ PROJECT=amq7
 oc project ${PROJECT}
 
 BUILD_NAME=${APP_NAME}-docker-build
+oc delete is ${APP_NAME}
 oc delete bc ${BUILD_NAME}
+oc delete secret rh-pull-secret
 
 oc secrets new-dockercfg rh-pull-secret \
     --docker-server=registry.redhat.io \
@@ -21,10 +23,6 @@ oc secrets new-dockercfg rh-pull-secret \
     --docker-email=openshift@openshift.com
 
 oc secrets link builder rh-pull-secret
-
-BUILD_NAME=${APP_NAME}-docker-build
-oc delete is ${APP_NAME}
-oc delete bc ${BUILD_NAME}
 
 # Docker build to add postgres and prometheus drivers (do this one last, as the s2i build can blow away changes made by this one)
 oc process -f ../../templates/custom-amq6-docker-bc-template.yaml \
