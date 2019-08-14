@@ -1,0 +1,133 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: amq-console-template
+objects:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      description: 'Service for the management console of broker pod 1'
+    labels:
+      app: ${APPLICATION_NAME}
+    name: ${POD1_NAME}-jolokia-service
+  spec:
+    ports:
+      - name: console-jolokia
+        port: 8161
+        protocol: TCP
+        targetPort: 8161
+    selector:
+      statefulset.kubernetes.io/pod-name: ${POD1_NAME}
+    type: ClusterIP
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      description: 'Service for the management console of broker pod 2'
+    labels:
+      app: ${APPLICATION_NAME}
+    name: ${POD2_NAME}-jolokia-service
+  spec:
+    ports:
+      - name: console-jolokia
+        port: 8161
+        protocol: TCP
+        targetPort: 8161
+    selector:
+      statefulset.kubernetes.io/pod-name: ${POD2_NAME}
+    type: ClusterIP
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      description: 'Service for the management console of broker pod 3'
+    labels:
+      app: ${APPLICATION_NAME}
+    name: ${POD3_NAME}-jolokia-service
+  spec:
+    ports:
+      - name: console-jolokia
+        port: 8161
+        protocol: TCP
+        targetPort: 8161
+    selector:
+      statefulset.kubernetes.io/pod-name: ${POD3_NAME}
+    type: ClusterIP
+
+- apiVersion: v1
+  kind: Route
+  metadata:
+    labels:
+      app: ${APPLICATION_NAME}
+      application: broker-amq
+    name: ${POD1_NAME}-hawtio
+  spec:
+    port:
+      targetPort: console-jolokia
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
+    to:
+      kind: Service
+      name: ${POD1_NAME}-jolokia-service
+      weight: 100
+    wildcardPolicy: None
+
+- apiVersion: v1
+  kind: Route
+  metadata:
+    labels:
+      app: ${APPLICATION_NAME}
+      application: broker-amq
+    name: ${POD2_NAME}-hawtio
+  spec:
+    port:
+      targetPort: console-jolokia
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
+    to:
+      kind: Service
+      name: ${POD2_NAME}-jolokia-service
+      weight: 100
+    wildcardPolicy: None
+
+- apiVersion: v1
+  kind: Route
+  metadata:
+    labels:
+      app: ${APPLICATION_NAME}
+      application: broker-amq
+    name: ${POD3_NAME}-hawtio
+  spec:
+    port:
+      targetPort: console-jolokia
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
+    to:
+      kind: Service
+      name: ${POD3_NAME}-jolokia-service
+      weight: 100
+    wildcardPolicy: None
+
+parameters:
+  - name: APPLICATION_NAME
+    displayName: Application Name
+    description: Name of the application label that should be used in all resources.
+    required: true
+  - name: POD1_NAME
+    displayName: Name of first broker pod
+    description: Name of first broker pod.
+    required: true
+  - name: POD2_NAME
+    displayName: Name of second broker pod
+    description: Name of second broker pod.
+    required: true
+  - name: POD3_NAME
+    displayName: Name of third broker pod
+    description: Name of third broker pod.
+    required: true
