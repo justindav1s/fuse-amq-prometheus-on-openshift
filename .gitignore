@@ -2,3 +2,7 @@
 *.iml
 /custom-images/dump/
 target
+
+*.ks
+*.ts
+*_cert
