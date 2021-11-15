@@ -33,7 +33,7 @@ oc process -f ../../templates/custom-amq6-s2i-bc-template.yaml \
   -p BASE_AMQ_IMAGE=${BASE_IMAGE} \
   -p BASE_AMQ_IMAGE_TAG=${BASE_IMAGE_TAG} \
   -p BASE_AMQ_IMAGE_NS=${BASE_IMAGE_NS} \
-  -p OUTPUT_REG"quay.io" \
+  -p OUTPUT_REG="quay.io" \
   -p OUTPUT_REG_REPO="justindav1s" \
   -p OUTPUT_IMAGE_NAME=${CUSTOM_IMAGE_NAME} \
   -p OUTPUT_IMAGE_TAG="s2i" \
