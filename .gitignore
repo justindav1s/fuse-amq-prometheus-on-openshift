@@ -6,3 +6,4 @@ target
 *.ks
 *.ts
 *_cert
+.DS_Store
