@@ -2,7 +2,7 @@
 
 . ../amq-env.sh
 
-oc login https://${IP}:8443 -u $USER
+oc login https://${IP} -u $USER
 
 echo PROJECT : $PROJECT
 

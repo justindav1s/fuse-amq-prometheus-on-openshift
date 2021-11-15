@@ -18,7 +18,7 @@ oc delete bc ${BUILD_NAME}
 oc process -f ../../templates/custom-amq6-s2i-bc-template.yaml \
   -p BUILD_NAME=${BUILD_NAME}  \
   -p APPLICATION_NAME=${APP_NAME}  \
-  -p GIT_REPO="https://github.com/justindav1s/amq.git"  \
+  -p GIT_REPO="https://github.com/justindav1s/fuse-amq-prometheus-on-openshift.git"  \
   -p GIT_BRANCH=master  \
   -p GIT_REPO_CONTEXT="custom-images/amq7"  \
   -p BASE_AMQ_IMAGE=${BASE_IMAGE} \
@@ -40,7 +40,7 @@ oc delete bc ${BUILD_NAME}
 oc process -f ../../templates/custom-amq6-docker-bc-template.yaml \
   -p BUILD_NAME=${BUILD_NAME}  \
   -p APPLICATION_NAME=${APP_NAME}  \
-  -p GIT_REPO="https://github.com/justindav1s/amq.git"  \
+  -p GIT_REPO="https://github.com/justindav1s/fuse-amq-prometheus-on-openshift.git"  \
   -p GIT_BRANCH=master  \
   -p GIT_REPO_CONTEXT="custom-images/amq6"  \
   -p OUTPUT_IMAGE_TAG="latest" \

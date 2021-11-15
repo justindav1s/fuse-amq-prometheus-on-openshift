@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 export USER=justin
-export IP=ocp.datr.eu
+export IP=api.sno.openshiftlabs.net:6443
 
 
 export AMQ_APP_NAME_PREFIX=custom-amq6-broker
