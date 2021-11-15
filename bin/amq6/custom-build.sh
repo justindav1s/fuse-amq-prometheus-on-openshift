@@ -55,9 +55,9 @@ oc process -f ../../templates/custom-amq6-docker-bc-template.yaml \
   -p GIT_REPO="https://github.com/justindav1s/fuse-amq-prometheus-on-openshift.git"  \
   -p GIT_BRANCH=master  \
   -p GIT_REPO_CONTEXT="custom-images/amq6"  \
-  -p OUTPUT_REG"quay.io" \
+  -p OUTPUT_REG="quay.io" \
   -p OUTPUT_REG_REPO="justindav1s" \
-  -p OUTPUT_IMAGE_NAME=${CUSTOM_IMAGE_NAME} \  
+  -p OUTPUT_IMAGE_NAME=${CUSTOM_IMAGE_NAME} \
   -p OUTPUT_IMAGE_TAG="latest" \
   | oc create -f -
 
