@@ -36,8 +36,10 @@ objects:
           incremental: true
       output:
         to:
-          kind: ImageStreamTag
-          name: ${APPLICATION_NAME}:${OUTPUT_IMAGE_TAG}
+          kind: DockerImage
+          name: ${OUTPUT_REG}/${OUTPUT_REG_REPO}/${OUTPUT_IMAGE_NAME}:${OUTPUT_IMAGE_TAG}
+        pushSecret:
+          name: quayio-dockercfg
       runPolicy: Serial
       resources: {}
       postCommit: {}
@@ -72,6 +74,15 @@ parameters:
     displayName: Base amq image namespace
     required: true
     value: "openshift"
+  - name: OUTPUT_REG
+    displayName: Output image registry
+    required: true 
+  - name: OUTPUT_REG_REPO
+    displayName: Output image registry rep
+    required: true 
+  - name: OUTPUT_IMAGE_NAME
+    displayName: Output image name
+    required: true
   - name: OUTPUT_IMAGE_TAG
     displayName: Output image tag
-    required: true
+    required: true        
